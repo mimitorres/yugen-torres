@@ -36,7 +36,7 @@ const App = () => {
   return (
     <div className={classes.appContainer}>
         <NavBar/>
-        <Container>
+        <Container className={classes.content}>
           <ItemListContainer products={products}/>
         </Container>
     </div>
