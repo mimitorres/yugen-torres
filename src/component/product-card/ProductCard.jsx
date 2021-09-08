@@ -1,8 +1,13 @@
 import { makeStyles, Card, CardActionArea, CardContent, CardMedia, Typography } from "@material-ui/core";
 
+import ItemCount from "../item-count/ItemCount";
+
 const useStyles = makeStyles({
     root: {
       maxWidth: 345,
+      display: 'flex',
+      flexDirection: 'column',
+      margin: '1em',
     },
     media: {
       height: 250,
@@ -33,7 +38,7 @@ const ProductCard = ({product}) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      {/* Desafio Boton Contador */}
+        <ItemCount/>
     </Card>
   );
 };
