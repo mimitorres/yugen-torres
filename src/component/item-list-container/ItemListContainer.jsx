@@ -1,5 +1,6 @@
 import { makeStyles } from "@material-ui/core";
-import React from "react";
+import PropTypes from 'prop-types';
+
 import ProductCard from "../product-card/ProductCard";
 
 const useStyles = makeStyles({
@@ -20,5 +21,13 @@ const ItemListContainer = ({ products }) => {
     </div>
   );
 };
+
+ItemListContainer.propTypes = {
+  products: PropTypes.arrayOf(PropTypes.shape({
+    title: PropTypes.string,
+    stock: PropTypes.number,
+    imageUrl: PropTypes.string,
+  })).isRequired,
+}
 
 export default ItemListContainer;

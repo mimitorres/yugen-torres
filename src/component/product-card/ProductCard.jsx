@@ -6,6 +6,7 @@ import {
   CardMedia,
   Typography,
 } from "@material-ui/core";
+import PropTypes from 'prop-types';
 
 import ItemCount from "../item-count/ItemCount";
 
@@ -48,5 +49,14 @@ const ProductCard = ({ product }) => {
     </Card>
   );
 };
+
+ProductCard.propTypes = {
+  product: PropTypes.shape({
+    imageUrl: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    stock: PropTypes.number.isRequired,
+  })
+}
 
 export default ProductCard;

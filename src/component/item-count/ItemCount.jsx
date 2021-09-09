@@ -7,6 +7,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Add, Remove } from "@material-ui/icons";
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -95,5 +96,12 @@ const ItemCount = ({ product }) => {
     </div>
   );
 };
+
+ItemCount.propTypes = {
+  product: PropTypes.shape({
+    title: PropTypes.string,
+    stock: PropTypes.number.isRequired,
+  }),
+}
 
 export default ItemCount;

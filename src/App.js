@@ -1,5 +1,7 @@
 import { Container, makeStyles } from "@material-ui/core";
+import { useState } from "react";
 import ItemListContainer from "./component/item-list-container/ItemListContainer";
+import Loading from "./component/loading/Loading";
 import NavBar from "./component/navbar/NavBar";
 
 const products = [
@@ -38,6 +40,11 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false)
+
+  // const handleBackdrop = () =>{
+  //   setTimeout(() => setLoading(false), 3000)
+  // }
 
   return (
     <div className={classes.appContainer}>
@@ -45,6 +52,8 @@ const App = () => {
       <Container className={classes.content}>
         <ItemListContainer products={products} />
       </Container>
+
+     <Loading state={loading}/>
     </div>
   );
 };
