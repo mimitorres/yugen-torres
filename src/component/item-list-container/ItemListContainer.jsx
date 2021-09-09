@@ -14,8 +14,8 @@ const ItemListContainer = ({ products }) => {
   const classes = useStyles();
   return (
     <div className={classes.catalog}>
-      {products.map((p) => (
-        <ProductCard product={p} />
+      {products.map(p => (
+        <ProductCard product={p}  key={p.title}/>
       ))}
     </div>
   );

@@ -41,13 +41,13 @@ const NavBar = () => {
 
     const categories =[
         {
-            text: "Remeras",
+            text: "Notebooks",
         },
         {
-            text: "Pantalones"
+            text: "Pens"
         },
         {
-            text: "Buzos"
+            text: "Stickers"
         }
     ]
   

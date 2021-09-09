@@ -24,7 +24,7 @@ const ListContainer = ({ categories }) => {
     <div className={clsx(classes.list)} role="presentation">
       <List>
         {categories.map((e) => (
-          <ListItem button>
+          <ListItem button key={e.text}>
             {e.icon && <ListItemIcon>{e.icon}</ListItemIcon>}
             <ListItemText primary={e.text} />
           </ListItem>
