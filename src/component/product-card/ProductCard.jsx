@@ -1,20 +1,20 @@
 import {
   makeStyles,
+  Button,
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
   Typography,
 } from "@material-ui/core";
-import PropTypes from 'prop-types';
-
-import ItemCount from "../item-count/ItemCount";
+import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
     display: "flex",
     flexDirection: "column",
+    alignItems: "center",
     margin: "1em",
   },
   media: {
@@ -22,6 +22,17 @@ const useStyles = makeStyles({
   },
   productText: {
     textAlign: "center",
+  },
+  openButton: {
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    border: 0,
+    borderRadius: 3,
+    color: "white",
+    fontVariantCaps: "all-small-caps",
+    maxWidth: "15em",
+    width: "100%",
+    marginTop: "auto",
+    marginBottom: "1em",
   },
 });
 
@@ -45,7 +56,9 @@ const ProductCard = ({ product }) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <ItemCount product={product} />
+      <Button className={classes.openButton} href={`/product/${product.id}`}>
+        More
+      </Button>
     </Card>
   );
 };
@@ -56,7 +69,7 @@ ProductCard.propTypes = {
     title: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,
     stock: PropTypes.number.isRequired,
-  })
-}
+  }),
+};
 
 export default ProductCard;

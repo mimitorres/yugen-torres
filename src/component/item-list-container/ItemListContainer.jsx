@@ -13,14 +13,17 @@ const useStyles = makeStyles({
 
 const ItemListContainer = ({ products }) => {
   const classes = useStyles();
+
   return (
     <div className={classes.catalog}>
-      {products.map(p => (
-        <ProductCard product={p}  key={p.title}/>
-      ))}
+      {products.map(p => (<ProductCard product={p}  key={p.title}/>))}
     </div>
   );
 };
+
+ItemListContainer.defaultProps ={
+  products: [],
+}
 
 ItemListContainer.propTypes = {
   products: PropTypes.arrayOf(PropTypes.shape({

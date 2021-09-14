@@ -1,32 +1,18 @@
+import { useEffect } from "react";
 import { Container, makeStyles } from "@material-ui/core";
 import { useState } from "react";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
+
+import { ROUTES } from "./routes/routes";
 import ItemListContainer from "./component/item-list-container/ItemListContainer";
 import Loading from "./component/loading/Loading";
 import NavBar from "./component/navbar/NavBar";
-
-const products = [
-  {
-    title: "Tales of Japan Hardcover Notebook",
-    imageUrl:
-      "https://cdn.shopify.com/s/files/1/1403/8979/products/Tales-of-Japan-Hardcover-Notebook-manga-style-notebook-lined-blank-grid-paper-stationery-school-supplies-office-supplies-22_1024x1024.png?v=1602285677",
-    price: "$25.99 USD",
-    stock: 10,
-  },
-  {
-    title: "KOKUYO Campus Notebook - Semi B5 - Lined",
-    imageUrl:
-      "https://cdn.shopify.com/s/files/1/1403/8979/products/Kokuyo-Campus-Notebook-Semi-B5-Dotted-6-mm-Rule-ruled-paper-stationery-school-supplies-office-supplies_grande.png?v=1581968040",
-    price: "$4.99 USD",
-    stock: 1,
-  },
-  {
-    title: "Sumikko Gurashi Daily Notebook",
-    imageUrl:
-      "https://cdn.shopify.com/s/files/1/1403/8979/products/1-pc-Sumikko-Gurashi-Daily-planner-Notebook-leather-planner-stationery-school-supplies-office-supplies_1024x1024.png?v=1618650994",
-    price: "$25.99 USD",
-    stock: 3,
-  },
-];
+import ProductDetail from "./component/product-detail/ProductDetail";
 
 const useStyles = makeStyles({
   appContainer: {
@@ -40,21 +26,45 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState([]);
 
-  // const handleBackdrop = () =>{
-  //   setTimeout(() => setLoading(false), 3000)
-  // }
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
+  const fetchProducts = async () => {
+    console.log("Fetching products");
+    await fetch("https://run.mocky.io/v3/2335a993-c832-4cb8-a48a-9310739af0f8")
+      .then((res) => res.json())
+      .then((data) => {
+        setProducts(data);
+        setLoading(false);
+      })
+      .catch((e) => console.error(e));
+  };
 
   return (
-    <div className={classes.appContainer}>
-      <NavBar />
-      <Container className={classes.content}>
-        <ItemListContainer products={products} />
-      </Container>
+    <Router>
+      <div className={classes.appContainer}>
+        <NavBar />
+        <Container className={classes.content}>
+          <Switch>
+            <Route path={ROUTES.home}>
+              <ItemListContainer products={products} />
+            </Route>
+            <Route path={ROUTES.product}>
+              <ProductDetail />
+            </Route>
+            <Route exact path="/">
+              <Redirect to="/home" />
+            </Route>
+          </Switch>
+        </Container>
 
-     <Loading state={loading}/>
-    </div>
+        <Loading state={loading} />
+      </div>
+    </Router>
   );
 };
 
