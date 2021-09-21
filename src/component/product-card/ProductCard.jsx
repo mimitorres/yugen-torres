@@ -1,12 +1,12 @@
 import {
   makeStyles,
-  Button,
   Card,
   CardActionArea,
   CardContent,
   CardMedia,
   Typography,
 } from "@material-ui/core";
+import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const useStyles = makeStyles({
@@ -33,12 +33,15 @@ const useStyles = makeStyles({
     width: "100%",
     marginTop: "auto",
     marginBottom: "1em",
+    padding: "0.5em",
+    textDecoration: "none !important",
+    textAlign: "center",
   },
 });
 
 const ProductCard = ({ product }) => {
   const classes = useStyles();
-
+ 
   return (
     <Card className={classes.root}>
       <CardActionArea>
@@ -56,9 +59,9 @@ const ProductCard = ({ product }) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Button className={classes.openButton} href={`/product/${product.id}`}>
+      <Link to={`/product/${product.id}`} className={classes.openButton}>
         More
-      </Button>
+      </Link>
     </Card>
   );
 };

@@ -15,7 +15,6 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     padding: "0 1em 1em",
-    marginTop: "auto",
   },
   countRoot: {
     padding: "2px 4px",

@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Container, makeStyles } from "@material-ui/core";
+import { Container, makeStyles, Typography } from "@material-ui/core";
 import { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -9,10 +8,10 @@ import {
 } from "react-router-dom";
 
 import { ROUTES } from "./routes/routes";
-import ItemListContainer from "./component/item-list-container/ItemListContainer";
 import Loading from "./component/loading/Loading";
 import NavBar from "./component/navbar/NavBar";
-import ProductDetail from "./component/product-detail/ProductDetail";
+import ProductDetail from "./pages/ProductDetail";
+import Home from "./pages/Home";
 
 const useStyles = makeStyles({
   appContainer: {
@@ -26,23 +25,7 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-  const [loading, setLoading] = useState(true);
-  const [products, setProducts] = useState([]);
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
-  const fetchProducts = async () => {
-    console.log("Fetching products");
-    await fetch("https://run.mocky.io/v3/2335a993-c832-4cb8-a48a-9310739af0f8")
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
-        setLoading(false);
-      })
-      .catch((e) => console.error(e));
-  };
+  const [loading, setLoading] = useState(false);
 
   return (
     <Router>
@@ -51,13 +34,16 @@ const App = () => {
         <Container className={classes.content}>
           <Switch>
             <Route path={ROUTES.home}>
-              <ItemListContainer products={products} />
+              <Home setLoading={setLoading} />
             </Route>
             <Route path={ROUTES.product}>
-              <ProductDetail />
+              <ProductDetail setLoading={setLoading}/>
             </Route>
             <Route exact path="/">
-              <Redirect to="/home" />
+              <Redirect to="/home"/>
+            </Route>
+            <Route path="*">
+              <Typography variant="h2">Not found! (｡•́︿•̀｡) </Typography>
             </Route>
           </Switch>
         </Container>
