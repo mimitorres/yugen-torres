@@ -7,6 +7,7 @@ import {
   ListItemText,
 } from "@material-ui/core";
 import clsx from "clsx";
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles({
   list: {
@@ -45,5 +46,15 @@ const MenuDrawer = ({ state, setState, categories }) => {
     </Drawer>
   );
 };
+
+ListContainer.propTypes = {
+  categories: PropTypes.array.isRequired,
+}
+
+MenuDrawer.propTypes = {
+  state: PropTypes.bool.isRequired,
+  setState: PropTypes.func.isRequired,
+  categories: PropTypes.array.isRequired,
+}
 
 export default MenuDrawer;
