@@ -1,7 +1,9 @@
+import { Box } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import ItemListContainer from '../component/item-list-container/ItemListContainer';
+import Loading from '../component/loading/Loading';
 
-const Home = ({setLoading}) => {
+const Home = ({setLoading, loading}) => {
     const [products, setProducts] = useState([]);
     useEffect(() => {
         setLoading(true)
@@ -19,9 +21,10 @@ const Home = ({setLoading}) => {
       };
 
     return (
-    <div>
+    !loading ? <Box>
         <ItemListContainer products={products} />
-    </div>
+        <Loading state={loading} />
+    </Box> : <Loading state={loading} />
 
     )
 }

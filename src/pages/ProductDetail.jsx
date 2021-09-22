@@ -13,16 +13,12 @@ import PropTypes from "prop-types";
 
 import ItemCount from "../component/item-count/ItemCount";
 import { ArrowBack } from "@material-ui/icons";
+import Loading from "../component/loading/Loading";
 
 const useStyles = makeStyles({
   root:{
     display: "flex",
     justifyContent: "space-around",
-  },
-  price:{
-    textAlign: "center",
-    color: "#fe7a73",
-    border: "#ff885c 2px solid",
   },
   content: {
     display: "flex",
@@ -33,20 +29,36 @@ const useStyles = makeStyles({
   imageContainer: {
     maxWidth: "35em",
   },
+  detailContainer: {
+    display: "flex",
+    flexDirection: "column",
+  },
+  cardContent:{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    flex: "1 0 auto",
+  },
   title: {
     textAlign: "center",
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
   },
-  detailContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-  },
   description: {
     whiteSpace: "pre-wrap",
     padding: "2em",
+    textAlign: "left",
+  },
+  price:{
+    textAlign: "center",
+    color: "white",
+    background: "linear-gradient(45deg, #FF8E53 50%, #FE6B8B 90%)",
+    width: "100%",
+    opacity: "65%",
+    borderRadius: "10px",
+    maxWidth: "10em",
+    marginTop: "auto",
   },
   button:{
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -54,7 +66,7 @@ const useStyles = makeStyles({
   }
 });
 
-const ProductDetail = ({setLoading}) => {
+const ProductDetail = ({setLoading, loading}) => {
   const classes = useStyles();
   let { id } = useParams();
   let history = useHistory();
@@ -89,12 +101,14 @@ const ProductDetail = ({setLoading}) => {
       default:
         break;
     }
-    setLoading(false);
+    setTimeout(() => {
+      setLoading(false)
+    }, 1000);
   }
 
   return (
-    <Box className={classes.root}>
-      <Fab className={classes.button} onClick={() => history.goBack()}>
+    !loading ? <Box className={classes.root}>
+       <Fab className={classes.button} onClick={() => history.goBack()}>
         <ArrowBack />
       </Fab>
       <Card className={classes.content}>
@@ -105,7 +119,7 @@ const ProductDetail = ({setLoading}) => {
           alt={currentProduct.title}
         />
         <Box className={classes.detailContainer}>
-          <CardContent sx={{ flex: "1 0 auto" }}>
+          <CardContent className={classes.cardContent}>
             <Typography component="div" variant="h3" className={classes.title}>
               {currentProduct.title}
             </Typography>
@@ -124,8 +138,8 @@ const ProductDetail = ({setLoading}) => {
           <ItemCount product={currentProduct} />
         </Box>
       </Card>
-    </Box>
-  );
+    </Box> : <Loading state={loading} />
+    );
 };
 
 ProductDetail.propTypes = {

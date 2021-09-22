@@ -8,7 +8,6 @@ import {
 } from "react-router-dom";
 
 import { ROUTES } from "./routes/routes";
-import Loading from "./component/loading/Loading";
 import NavBar from "./component/navbar/NavBar";
 import ProductDetail from "./pages/ProductDetail";
 import Home from "./pages/Home";
@@ -19,7 +18,7 @@ const useStyles = makeStyles({
     flexDirection: "column",
   },
   content: {
-    marginTop: "1em",
+    marginTop: "3.5em",
   },
 });
 
@@ -29,15 +28,14 @@ const App = () => {
 
   return (
     <Router>
-      <div className={classes.appContainer}>
         <NavBar />
-        <Container className={classes.content}>
+        <Container className={classes.content} fixed>
           <Switch>
             <Route path={ROUTES.home}>
-              <Home setLoading={setLoading} />
+              <Home setLoading={setLoading} loading={loading}/>
             </Route>
             <Route path={ROUTES.product}>
-              <ProductDetail setLoading={setLoading}/>
+              <ProductDetail setLoading={setLoading} loading={loading}/>
             </Route>
             <Route exact path="/">
               <Redirect to="/home"/>
@@ -47,9 +45,6 @@ const App = () => {
             </Route>
           </Switch>
         </Container>
-
-        <Loading state={loading} />
-      </div>
     </Router>
   );
 };
