@@ -16,7 +16,7 @@ import { ArrowBack } from "@material-ui/icons";
 import Loading from "../component/loading/Loading";
 
 const useStyles = makeStyles({
-  root:{
+  root: {
     display: "flex",
     justifyContent: "space-around",
   },
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
   },
-  cardContent:{
+  cardContent: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -50,7 +50,7 @@ const useStyles = makeStyles({
     padding: "2em",
     textAlign: "left",
   },
-  price:{
+  price: {
     textAlign: "center",
     color: "white",
     background: "linear-gradient(45deg, #FF8E53 50%, #FE6B8B 90%)",
@@ -60,13 +60,13 @@ const useStyles = makeStyles({
     maxWidth: "10em",
     marginTop: "auto",
   },
-  button:{
+  button: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     color: "white",
-  }
+  },
 });
 
-const ProductDetail = ({setLoading, loading}) => {
+const ProductDetail = ({ setLoading, loading }) => {
   const classes = useStyles();
   let { id } = useParams();
   let history = useHistory();
@@ -77,8 +77,7 @@ const ProductDetail = ({setLoading, loading}) => {
     getItem(id);
   }, []);
 
-
-  const getItem = id => {
+  const getItem = (id) => {
     switch (id) {
       case "1":
         fetch("https://run.mocky.io/v3/e8250b06-aead-41a8-bef7-40b76b1cd9f8")
@@ -98,17 +97,53 @@ const ProductDetail = ({setLoading, loading}) => {
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
+      case "4":
+        fetch("https://run.mocky.io/v3/5c30c425-aeb2-4fe6-bace-1edb001f1992")
+          .then((res) => res.json())
+          .then((data) => setCurrentProduct(data))
+          .catch((e) => console.error(e));
+        break;
+      case "5":
+        fetch("https://run.mocky.io/v3/4ae8d8f2-8af5-4187-9e14-df045af9efb7")
+          .then((res) => res.json())
+          .then((data) => setCurrentProduct(data))
+          .catch((e) => console.error(e));
+        break;
+      case "6":
+        fetch("https://run.mocky.io/v3/ddf629c1-82c5-45c8-b931-e959e4749ef3")
+          .then((res) => res.json())
+          .then((data) => setCurrentProduct(data))
+          .catch((e) => console.error(e));
+        break;
+      case "7":
+        fetch("https://run.mocky.io/v3/701d762b-7607-4cfe-8fcf-72cc99c61490")
+          .then((res) => res.json())
+          .then((data) => setCurrentProduct(data))
+          .catch((e) => console.error(e));
+        break;
+      case "8":
+        fetch("https://run.mocky.io/v3/826c3397-0a37-4498-bb47-46b0553741a3")
+          .then((res) => res.json())
+          .then((data) => setCurrentProduct(data))
+          .catch((e) => console.error(e));
+        break;
+      case "9":
+        fetch("https://run.mocky.io/v3/ed914520-eabf-4067-bbe2-a7f7be99704b")
+          .then((res) => res.json())
+          .then((data) => setCurrentProduct(data))
+          .catch((e) => console.error(e));
+        break;
       default:
         break;
     }
     setTimeout(() => {
-      setLoading(false)
+      setLoading(false);
     }, 1000);
-  }
+  };
 
-  return (
-    !loading ? <Box className={classes.root}>
-       <Fab className={classes.button} onClick={() => history.goBack()}>
+  return !loading ? (
+    <Box className={classes.root}>
+      <Fab className={classes.button} onClick={() => history.goBack()}>
         <ArrowBack />
       </Fab>
       <Card className={classes.content}>
@@ -138,8 +173,10 @@ const ProductDetail = ({setLoading, loading}) => {
           <ItemCount product={currentProduct} />
         </Box>
       </Card>
-    </Box> : <Loading state={loading} />
-    );
+    </Box>
+  ) : (
+    <Loading state={loading} />
+  );
 };
 
 ProductDetail.propTypes = {

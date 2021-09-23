@@ -12,6 +12,7 @@ import PropTypes from "prop-types";
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+    width:"100%",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",

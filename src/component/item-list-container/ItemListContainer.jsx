@@ -8,6 +8,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-evenly",
+    flexWrap: "wrap",
   },
 });
 

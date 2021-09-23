@@ -11,7 +11,7 @@ const Home = ({setLoading, loading}) => {
       }, []);
     
       const fetchProducts = async () => {
-        await fetch("https://run.mocky.io/v3/28e07712-dd9a-4cfe-a7cd-e6d8bccd04c7")
+        await fetch("https://run.mocky.io/v3/e92ed761-25f8-412a-b042-d97202872b4e")
           .then((res) => res.json())
           .then((data) => {
             setProducts(data);
