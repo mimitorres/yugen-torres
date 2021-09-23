@@ -5,6 +5,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 
 import MenuDrawer from "../menu-drawer/MenuDrawer";
 import CartWidget from "../cart-widget/CartWidget";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -17,6 +18,9 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     justifyContent: "center",
     alignContent: "center",
+    textDecoration: "none",
+    color: "white",
+    fontSize: "1.5em",
   },
   navbar: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -60,9 +64,9 @@ const NavBar = () => {
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" className={classes.title}>
+        <Link to={"/"} variant="h6" className={classes.title}>
           幽玄
-        </Typography>
+        </Link>
         <CartWidget />
       </Toolbar>
       <MenuDrawer
