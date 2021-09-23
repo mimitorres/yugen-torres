@@ -3,9 +3,9 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemIcon,
-  ListItemText,
+  ListItemIcon
 } from "@material-ui/core";
+import { NavLink } from "react-router-dom";
 import clsx from "clsx";
 import PropTypes from 'prop-types';
 
@@ -16,6 +16,10 @@ const useStyles = makeStyles({
   fullList: {
     width: "auto",
   },
+  link:{
+    textDecoration: "none",
+    color: "inherit",
+  },
 });
 
 const ListContainer = ({ categories }) => {
@@ -24,10 +28,10 @@ const ListContainer = ({ categories }) => {
   return (
     <div className={clsx(classes.list)} role="presentation">
       <List>
-        {categories.map((e) => (
-          <ListItem button key={e.text}>
-            {e.icon && <ListItemIcon>{e.icon}</ListItemIcon>}
-            <ListItemText primary={e.text} />
+        {categories.map((c) => (
+          <ListItem button key={c.id}>
+            {c.icon && <ListItemIcon>{c.icon}</ListItemIcon>}
+            <NavLink to={`/category/${c.id}`} className={classes.link}>{c.text}</NavLink>
           </ListItem>
         ))}
       </List>

@@ -11,6 +11,7 @@ import { ROUTES } from "./routes/routes";
 import NavBar from "./component/navbar/NavBar";
 import ProductDetail from "./pages/ProductDetail";
 import Home from "./pages/Home";
+import FilteredProducts from "./pages/FilteredProducts";
 
 const useStyles = makeStyles({
   appContainer: {
@@ -36,6 +37,9 @@ const App = () => {
             </Route>
             <Route path={ROUTES.product}>
               <ProductDetail setLoading={setLoading} loading={loading}/>
+            </Route>
+            <Route path={ROUTES.category}>
+              <FilteredProducts setLoading={setLoading} loading={loading}/>
             </Route>
             <Route exact path="/">
               <Redirect to="/home"/>
