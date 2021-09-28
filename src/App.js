@@ -41,6 +41,9 @@ const App = () => {
             <Route path={ROUTES.category}>
               <FilteredProducts setLoading={setLoading} loading={loading}/>
             </Route>
+            <Route path={ROUTES.cart}>
+            <Typography variant="h2" style={{textAlign: "center"}}>Cart in progress! (๑´ㅂ`๑) </Typography>
+            </Route>
             <Route exact path="/">
               <Redirect to="/home"/>
             </Route>
