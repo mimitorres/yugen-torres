@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Button,
   IconButton,
@@ -47,22 +46,17 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const ItemCount = ({ product }) => {
+const ItemCount = ({ stock, itemCount, setItemCount, onAdd }) => { //stock, setCount, onAdd
   const classes = useStyles();
-  const [itemCount, setItemCount] = useState(1);
 
   const addItem = () => {
     setItemCount((prevState) =>
-      prevState < product.stock ? prevState + 1 : prevState
+      prevState < stock ? prevState + 1 : prevState
     );
   };
 
   const removeItem = () => {
     setItemCount((prevState) => (prevState > 1 ? prevState - 1 : 1));
-  };
-
-  const alertCart = () => {
-    alert(`Added ${itemCount} ${itemCount>1 ? 'products' : 'product'} to the cart!`);
   };
 
   return (
@@ -79,7 +73,7 @@ const ItemCount = ({ product }) => {
         <IconButton
           className={classes.iconButton}
           onClick={() => addItem()}
-          disabled={itemCount >= product.stock}
+          disabled={itemCount >= stock}
         >
           <Add />
         </IconButton>
@@ -87,8 +81,8 @@ const ItemCount = ({ product }) => {
       <Button
         size="medium"
         className={classes.button}
-        onClick={alertCart}
-        disabled={product.stock === 0}
+        onClick={onAdd}
+        disabled={stock === 0}
       >
         Add to Cart
       </Button>
@@ -101,6 +95,7 @@ ItemCount.propTypes = {
     title: PropTypes.string,
     stock: PropTypes.number.isRequired,
   }),
+  onAdd: PropTypes.func,
 }
 
 export default ItemCount;

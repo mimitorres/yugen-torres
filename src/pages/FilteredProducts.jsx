@@ -13,6 +13,7 @@ const FilteredProducts = ({ setLoading, loading }) => {
       setLoading(true);
       fetchFilteredProducts();
     }
+    // eslint-disable-next-line
   }, [id]);
 
   const fetchFilteredProducts = async () => {

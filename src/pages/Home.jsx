@@ -8,6 +8,7 @@ const Home = ({setLoading, loading}) => {
     useEffect(() => {
         setLoading(true)
         fetchProducts();
+        // eslint-disable-next-line
       }, []);
     
       const fetchProducts = async () => {

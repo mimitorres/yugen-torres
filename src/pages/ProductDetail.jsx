@@ -7,6 +7,7 @@ import {
   Box,
   CardContent,
   Fab,
+  Button,
 } from "@material-ui/core";
 import { useParams, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -14,6 +15,7 @@ import PropTypes from "prop-types";
 import ItemCount from "../component/item-count/ItemCount";
 import { ArrowBack } from "@material-ui/icons";
 import Loading from "../component/loading/Loading";
+import OnAddModal from "../component/on-add-modal/OnAddModal";
 
 const useStyles = makeStyles({
   root: {
@@ -64,18 +66,43 @@ const useStyles = makeStyles({
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     color: "white",
   },
+  onCartBox: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  onCartButton: {
+    margin: "1em",
+    maxWidth: "12em",
+    color: "gray",
+    fontVariant: "all-small-caps",
+    border: "10px solid",
+    borderImageSlice: "1",
+    borderWidth: "5px",
+    borderImageSource: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+  },
 });
 
 const ProductDetail = ({ setLoading, loading }) => {
-  const classes = useStyles();
   let { id } = useParams();
   let history = useHistory();
+  const classes = useStyles();
+
   const [currentProduct, setCurrentProduct] = useState({});
+  const [inCart, setInCart] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [itemCount, setItemCount] = useState(1);
 
   useEffect(() => {
     setLoading(true);
     getItem(id);
+    // eslint-disable-next-line
   }, []);
+
+  const onAddItem = () => {
+    setInCart(true);
+    setModalOpen(true);
+  };
 
   const getItem = (id) => {
     switch (id) {
@@ -110,7 +137,7 @@ const ProductDetail = ({ setLoading, loading }) => {
           .catch((e) => console.error(e));
         break;
       case "6":
-        fetch("https://run.mocky.io/v3/ddf629c1-82c5-45c8-b931-e959e4749ef3")
+        fetch("https://run.mocky.io/v3/b93f672b-0fe1-40f8-95d0-25f755b82d52")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
@@ -170,9 +197,29 @@ const ProductDetail = ({ setLoading, loading }) => {
               {currentProduct.price}
             </Typography>
           </CardContent>
-          <ItemCount product={currentProduct} />
+          {!inCart ? (
+            <ItemCount
+              stock={currentProduct.stock}
+              onAdd={() => onAddItem()}
+              itemCount={itemCount}
+              setItemCount={setItemCount}
+            />
+          ) : (
+            <Box className={classes.onCartBox}>
+              <Button size="medium" className={classes.onCartButton} disabled>
+                Already in cart!
+              </Button>
+            </Box>
+          )}
         </Box>
       </Card>
+      {modalOpen && 
+        <OnAddModal
+          open={modalOpen}
+          setOpen={setModalOpen}
+          itemCount={itemCount}
+        />
+      }
     </Box>
   ) : (
     <Loading state={loading} />
