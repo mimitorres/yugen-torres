@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import {
   makeStyles,
   Typography,
@@ -16,6 +16,7 @@ import ItemCount from "../component/item-count/ItemCount";
 import { ArrowBack } from "@material-ui/icons";
 import Loading from "../component/loading/Loading";
 import OnAddModal from "../component/on-add-modal/OnAddModal";
+import { CartContext } from "../context/CartContext";
 
 const useStyles = makeStyles({
   root: {
@@ -87,11 +88,12 @@ const ProductDetail = ({ setLoading, loading }) => {
   let { id } = useParams();
   let history = useHistory();
   const classes = useStyles();
+  const { addProduct, isInCart } = useContext(CartContext);
 
   const [currentProduct, setCurrentProduct] = useState({});
-  const [inCart, setInCart] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [itemCount, setItemCount] = useState(1);
+
 
   useEffect(() => {
     setLoading(true);
@@ -100,7 +102,7 @@ const ProductDetail = ({ setLoading, loading }) => {
   }, []);
 
   const onAddItem = () => {
-    setInCart(true);
+    addProduct(currentProduct, itemCount);
     setModalOpen(true);
   };
 
@@ -197,7 +199,7 @@ const ProductDetail = ({ setLoading, loading }) => {
               {currentProduct.price}
             </Typography>
           </CardContent>
-          {!inCart ? (
+          {!isInCart(currentProduct.id) ? (
             <ItemCount
               stock={currentProduct.stock}
               onAdd={() => onAddItem()}
@@ -228,6 +230,7 @@ const ProductDetail = ({ setLoading, loading }) => {
 
 ProductDetail.propTypes = {
   product: PropTypes.shape({
+    id: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     price: PropTypes.string.isRequired,

@@ -13,6 +13,8 @@ import ProductDetail from "./pages/ProductDetail";
 import Home from "./pages/Home";
 import FilteredProducts from "./pages/FilteredProducts";
 
+import CartContextProvider from "./context/CartContext";
+
 const useStyles = makeStyles({
   appContainer: {
     display: "flex",
@@ -29,29 +31,33 @@ const App = () => {
 
   return (
     <Router>
+      <CartContextProvider>
         <NavBar />
         <Container className={classes.content} fixed>
           <Switch>
             <Route path={ROUTES.home}>
-              <Home setLoading={setLoading} loading={loading}/>
+              <Home setLoading={setLoading} loading={loading} />
             </Route>
             <Route path={ROUTES.product}>
-              <ProductDetail setLoading={setLoading} loading={loading}/>
+              <ProductDetail setLoading={setLoading} loading={loading} />
             </Route>
             <Route path={ROUTES.category}>
-              <FilteredProducts setLoading={setLoading} loading={loading}/>
+              <FilteredProducts setLoading={setLoading} loading={loading} />
             </Route>
             <Route path={ROUTES.cart}>
-            <Typography variant="h2" style={{textAlign: "center"}}>Cart in progress! (๑´ㅂ`๑) </Typography>
+              <Typography variant="h2" style={{ textAlign: "center" }}>
+                Cart in progress! (๑´ㅂ`๑){" "}
+              </Typography>
             </Route>
             <Route exact path="/">
-              <Redirect to="/home"/>
+              <Redirect to="/home" />
             </Route>
             <Route path="*">
               <Typography variant="h2">Not found! (｡•́︿•̀｡) </Typography>
             </Route>
           </Switch>
         </Container>
+      </CartContextProvider>
     </Router>
   );
 };
