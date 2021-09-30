@@ -18,6 +18,9 @@ import Loading from "../component/loading/Loading";
 import OnAddModal from "../component/on-add-modal/OnAddModal";
 import { CartContext } from "../context/CartContext";
 
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore/lite";
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -106,68 +109,80 @@ const ProductDetail = ({ setLoading, loading }) => {
     setModalOpen(true);
   };
 
-  const getItem = (id) => {
-    switch (id) {
-      case "1":
-        fetch("https://run.mocky.io/v3/e8250b06-aead-41a8-bef7-40b76b1cd9f8")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "2":
-        fetch("https://run.mocky.io/v3/cc48552c-fb54-4f11-8174-44ffe7f4313a")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "3":
-        fetch("https://run.mocky.io/v3/cf879ac7-457e-4454-a901-4609c9268931")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "4":
-        fetch("https://run.mocky.io/v3/5c30c425-aeb2-4fe6-bace-1edb001f1992")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "5":
-        fetch("https://run.mocky.io/v3/4ae8d8f2-8af5-4187-9e14-df045af9efb7")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "6":
-        fetch("https://run.mocky.io/v3/b93f672b-0fe1-40f8-95d0-25f755b82d52")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "7":
-        fetch("https://run.mocky.io/v3/701d762b-7607-4cfe-8fcf-72cc99c61490")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "8":
-        fetch("https://run.mocky.io/v3/826c3397-0a37-4498-bb47-46b0553741a3")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "9":
-        fetch("https://run.mocky.io/v3/ed914520-eabf-4067-bbe2-a7f7be99704b")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      default:
-        break;
+  const getItem = async(id) => {
+    // switch (id) {
+    //   case "1":
+    //     fetch("https://run.mocky.io/v3/e8250b06-aead-41a8-bef7-40b76b1cd9f8")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   case "2":
+    //     fetch("https://run.mocky.io/v3/cc48552c-fb54-4f11-8174-44ffe7f4313a")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   case "3":
+    //     fetch("https://run.mocky.io/v3/cf879ac7-457e-4454-a901-4609c9268931")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   case "4":
+    //     fetch("https://run.mocky.io/v3/5c30c425-aeb2-4fe6-bace-1edb001f1992")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   case "5":
+    //     fetch("https://run.mocky.io/v3/4ae8d8f2-8af5-4187-9e14-df045af9efb7")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   case "6":
+    //     fetch("https://run.mocky.io/v3/b93f672b-0fe1-40f8-95d0-25f755b82d52")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   case "7":
+    //     fetch("https://run.mocky.io/v3/701d762b-7607-4cfe-8fcf-72cc99c61490")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   case "8":
+    //     fetch("https://run.mocky.io/v3/826c3397-0a37-4498-bb47-46b0553741a3")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   case "9":
+    //     fetch("https://run.mocky.io/v3/ed914520-eabf-4067-bbe2-a7f7be99704b")
+    //       .then((res) => res.json())
+    //       .then((data) => setCurrentProduct(data))
+    //       .catch((e) => console.error(e));
+    //     break;
+    //   default:
+    //     break;
+    // }
+    // setTimeout(() => {
+    //   setLoading(false);
+    // }, 1000);
+
+    setLoading(true);
+
+    const prodRef = doc(db, "products", id);
+    const prodSnap = await getDoc(prodRef);
+
+    if (prodSnap.exists()) {
+      setCurrentProduct(prodSnap.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   };
 
   return !loading ? (
@@ -215,13 +230,13 @@ const ProductDetail = ({ setLoading, loading }) => {
           )}
         </Box>
       </Card>
-      {modalOpen && 
+      {modalOpen && (
         <OnAddModal
           open={modalOpen}
           setOpen={setModalOpen}
           itemCount={itemCount}
         />
-      }
+      )}
     </Box>
   ) : (
     <Loading state={loading} />
