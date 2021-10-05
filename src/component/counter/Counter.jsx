@@ -10,7 +10,6 @@ const useStyles = makeStyles((theme) => ({
         alignItems: "center",
         maxWidth: "12em",
         width: "100%",
-        margin: "1em",
       },
       input: {
         textAlign: "center",
@@ -27,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Counter = ({addItem, removeItem, itemCount, stock}) => {
 
-    const classes = useStyles();
+  const classes = useStyles();
   return (
     <Box className={classes.countRoot}>
       <IconButton

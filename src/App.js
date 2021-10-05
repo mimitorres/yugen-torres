@@ -49,7 +49,7 @@ const App = () => {
               <Cart/>
             </Route>
             <Route exact path="/">
-              <Redirect to="/home" />
+              <Redirect to={ROUTES.home} />
             </Route>
             <Route path="*">
               <Typography variant="h2">Not found! (｡•́︿•̀｡) </Typography>

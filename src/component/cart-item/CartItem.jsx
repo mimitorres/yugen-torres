@@ -6,27 +6,46 @@ import {
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
 import Counter from "../counter/Counter";
 
 const useStyles = makeStyles({
   row: {
     display: "flex",
-    maxWidth: "35em",
+    maxWidth: "40em",
+    margin: "0.5em",
+    border: "10px solid",
+    borderImageSlice: "1",
+    borderWidth: "5px",
+    borderImageSource: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   },
-  image:{
-      maxWidth: "12em",
+  image: {
+    maxWidth: "12em",
   },
-  detail:{
+  detail: {
     display: "flex",
     flexDirection: "column",
+    justifyContent: "center",
   },
-  count:{
-      maxWidth: "10em",
-  }
+  count: {
+    maxWidth: "10em",
+  },
+  title: {
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    textAlign: "start",
+  },
+  price: {
+    color: "grey",
+  },
 });
 
-const CartItem = ({product}) => {
+const CartItem = ({ product }) => {
   const classes = useStyles();
+  const { addOne, removeOne } = useContext(CartContext);
+
   return (
     <Card className={classes.row}>
       <CardMedia
@@ -37,13 +56,15 @@ const CartItem = ({product}) => {
       />
       <Box className={classes.detail}>
         <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5">
+          <Typography component="div" variant="h5" className={classes.title}>
             {product.title}
           </Typography>
-          <Typography component="div" variant="h6">
+          <Typography component="div" variant="h6" className={classes.price}>
             {product.price}
           </Typography>
-          <Counter itemCount={product.quantity} className={classes.count}/>
+          <Box className={classes.count}>
+            <Counter itemCount={product.quantity} addItem={() => addOne(product.id)} removeItem={() => removeOne(product.id)} stock={product.stock}/>
+          </Box>
         </CardContent>
       </Box>
     </Card>

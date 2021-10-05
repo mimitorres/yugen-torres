@@ -25,9 +25,21 @@ const CartContextProvider = ({children}) => {
         return products?.some(p => p.id === itemId);
     };
 
+    const removeOne = (itemId) => {
+        let updatedProducts = products.map(p => (p.id === itemId && p.quantity > 1 ? {...p, quantity: p.quantity-1} : p));
+        setProducts(updatedProducts);
+        console.log("removed one:\n", products);
+    };
+
+    const addOne = (itemId) => {
+        let updatedProducts = products.map(p => (p.id === itemId && p.quantity <= p.stock ? {...p, quantity: p.quantity+1} : p));
+        setProducts(updatedProducts);
+        console.log(products);
+    };
+
     return (
         <CartContext.Provider
-        value={{products, addProduct, removeProduct, clearCart, isInCart, totalProducts }}>
+        value={{products, addProduct, removeProduct, clearCart, isInCart, totalProducts, removeOne, addOne }}>
             {children}
         </CartContext.Provider>
     )
