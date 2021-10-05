@@ -4,9 +4,9 @@ import CartItem from '../cart-item/CartItem'
 
 const CartList = ({products}) => {
     return (
-        <Box>
-            {products.map(p => <CartItem product={p} />)}
-        </Box>
+        <>
+            {products.map((p, i) => <CartItem product={p} isLast={i === products.length-1} key={p.id}/>)}
+        </>
     )
 }
 

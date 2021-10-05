@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 export const CartContext = React.createContext({});
 
 const CartContextProvider = ({children}) => {
     const [products, setProducts] = useState([]);
     const [totalProducts, setTotalProducts] = useState(0);
+
+    useEffect(() => {
+        updateTotalProducts();
+    }, [products]);
 
     const addProduct = (item, quantity) => {
         if(!isInCart(item.id)){
@@ -14,6 +18,8 @@ const CartContextProvider = ({children}) => {
     };
 
     const removeProduct = (itemId) => {
+        const product = products.find(p => p.id === itemId);
+        setTotalProducts((prevState) => prevState -= product.quantity);
         setProducts(products?.filter(p => p.id !== itemId));
     };
 
@@ -28,14 +34,18 @@ const CartContextProvider = ({children}) => {
     const removeOne = (itemId) => {
         let updatedProducts = products.map(p => (p.id === itemId && p.quantity > 1 ? {...p, quantity: p.quantity-1} : p));
         setProducts(updatedProducts);
-        console.log("removed one:\n", products);
     };
 
     const addOne = (itemId) => {
         let updatedProducts = products.map(p => (p.id === itemId && p.quantity <= p.stock ? {...p, quantity: p.quantity+1} : p));
         setProducts(updatedProducts);
-        console.log(products);
     };
+
+    const updateTotalProducts = () => {
+        let total = 0;
+        products.forEach(p => total += p.quantity);
+        setTotalProducts(total);
+    }
 
     return (
         <CartContext.Provider

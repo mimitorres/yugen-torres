@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
     fontVariantCaps: "all-small-caps",
     maxWidth: "15em",
     width: "100%",
+    marginTop: "0.5em",
   },
 }));
 

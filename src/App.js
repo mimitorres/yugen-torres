@@ -48,6 +48,9 @@ const App = () => {
             <Route path={ROUTES.cart}>
               <Cart/>
             </Route>
+            <Route path={ROUTES.checkout}>
+              <Typography variant="h2">Checkout in progress! (´｡• ◡ •｡`) ♡ </Typography>
+            </Route>
             <Route exact path="/">
               <Redirect to={ROUTES.home} />
             </Route>

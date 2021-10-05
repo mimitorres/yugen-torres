@@ -3,9 +3,12 @@ import {
   Card,
   CardContent,
   CardMedia,
+  Divider,
+  Fab,
   makeStyles,
   Typography,
 } from "@material-ui/core";
+import { Remove } from "@material-ui/icons";
 import { useContext } from "react";
 import { CartContext } from "../../context/CartContext";
 import Counter from "../counter/Counter";
@@ -17,7 +20,7 @@ const useStyles = makeStyles({
     margin: "0.5em",
     border: "10px solid",
     borderImageSlice: "1",
-    borderWidth: "5px",
+    borderWidth: "2px",
     borderImageSource: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   },
   image: {
@@ -29,45 +32,66 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   count: {
-    maxWidth: "10em",
+    display: "flex",
+    justifyContent: "space-between",
   },
   title: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
     textAlign: "start",
+    fontWeight: "600",
   },
   price: {
     color: "grey",
   },
+  divider: {
+    margin: "1em 0",
+    maxWidth: "42em",
+  },
+  button: {
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    color: "white",
+  },
 });
 
-const CartItem = ({ product }) => {
+const CartItem = ({ product, isLast }) => {
   const classes = useStyles();
-  const { addOne, removeOne } = useContext(CartContext);
+  const { addOne, removeOne, removeProduct } = useContext(CartContext);
 
   return (
-    <Card className={classes.row}>
-      <CardMedia
-        component="img"
-        image={product.imageUrl}
-        alt={product.title}
-        className={classes.image}
-      />
-      <Box className={classes.detail}>
-        <CardContent sx={{ flex: "1 0 auto" }}>
-          <Typography component="div" variant="h5" className={classes.title}>
-            {product.title}
-          </Typography>
-          <Typography component="div" variant="h6" className={classes.price}>
-            {product.price}
-          </Typography>
-          <Box className={classes.count}>
-            <Counter itemCount={product.quantity} addItem={() => addOne(product.id)} removeItem={() => removeOne(product.id)} stock={product.stock}/>
-          </Box>
-        </CardContent>
-      </Box>
-    </Card>
+    <>
+      <Card className={classes.row}>
+        <CardMedia
+          component="img"
+          image={product.imageUrl}
+          alt={product.title}
+          className={classes.image}
+        />
+        <Box className={classes.detail}>
+          <CardContent sx={{ flex: "1 0 auto" }}>
+            <Typography component="div" variant="h5" className={classes.title}>
+              {product.title}
+            </Typography>
+            <Typography component="div" variant="h6" className={classes.price}>
+              ${product.price * product.quantity}
+            </Typography>
+            <Box className={classes.count}>
+              <Counter
+                itemCount={product.quantity}
+                addItem={() => addOne(product.id)}
+                removeItem={() => removeOne(product.id)}
+                stock={product.stock}
+              />
+              <Fab size="small" className={classes.button} onClick={() => removeProduct(product.id)}>
+                <Remove />
+              </Fab>
+            </Box>
+          </CardContent>
+        </Box>
+      </Card>
+      {!isLast && <Divider className={classes.divider} />}
+    </>
   );
 };
 
