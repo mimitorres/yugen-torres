@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import FilteredProducts from "./pages/FilteredProducts";
 
 import CartContextProvider from "./context/CartContext";
+import Cart from "./pages/Cart";
 
 const useStyles = makeStyles({
   appContainer: {
@@ -45,9 +46,7 @@ const App = () => {
               <FilteredProducts setLoading={setLoading} loading={loading} />
             </Route>
             <Route path={ROUTES.cart}>
-              <Typography variant="h2" style={{ textAlign: "center" }}>
-                Cart in progress! (๑´ㅂ`๑){" "}
-              </Typography>
+              <Cart/>
             </Route>
             <Route exact path="/">
               <Redirect to="/home" />
