@@ -56,7 +56,7 @@ const ProductCard = ({ product }) => {
             {product.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            {product.price}
+            ${product.price}
           </Typography>
         </CardContent>
       </CardActionArea>

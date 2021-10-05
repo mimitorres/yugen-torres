@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, IconButton } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -6,6 +6,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import MenuDrawer from "../menu-drawer/MenuDrawer";
 import CartWidget from "../cart-widget/CartWidget";
 import { Link } from "react-router-dom";
+import { CartContext } from "../../context/CartContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -38,6 +39,7 @@ const NavBar = () => {
 
   const [drawerState, setDrawerState] = useState(false);
   const [categories, setCategories] = useState([]);
+  const {products} = useContext(CartContext);
 
   useEffect(() => {
     fetchCategories();
@@ -67,7 +69,7 @@ const NavBar = () => {
         <Link to={"/"} variant="h6" className={classes.title}>
           幽玄
         </Link>
-        <CartWidget />
+        {products.length > 0 && <CartWidget />}
       </Toolbar>
       <MenuDrawer
         state={drawerState}

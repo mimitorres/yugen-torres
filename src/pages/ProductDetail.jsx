@@ -9,7 +9,7 @@ import {
   Fab,
   Button,
 } from "@material-ui/core";
-import { useParams, useHistory } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
 import ItemCount from "../component/item-count/ItemCount";
@@ -17,6 +17,7 @@ import { ArrowBack } from "@material-ui/icons";
 import Loading from "../component/loading/Loading";
 import OnAddModal from "../component/on-add-modal/OnAddModal";
 import { CartContext } from "../context/CartContext";
+import { ROUTES } from "../routes/routes";
 
 const useStyles = makeStyles({
   root: {
@@ -73,15 +74,25 @@ const useStyles = makeStyles({
     alignItems: "center",
   },
   onCartButton: {
+    background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    border: 0,
+    borderRadius: 10,
+    color: "white",
+    fontWeight: "bold",
+    fontVariantCaps: "all-small-caps",
+    maxWidth: "13em",
+    width: "100%",
     margin: "1em",
-    maxWidth: "12em",
-    color: "gray",
-    fontVariant: "all-small-caps",
-    border: "10px solid",
-    borderImageSlice: "1",
-    borderWidth: "5px",
-    borderImageSource: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
+    textAlign: "center",
   },
+  link: {
+    textDecoration: "none",
+    color: "inherit",
+    fontWeight: "500",
+  },
+  count:{
+    margin: "0.5em 0",
+  }
 });
 
 const ProductDetail = ({ setLoading, loading }) => {
@@ -109,55 +120,55 @@ const ProductDetail = ({ setLoading, loading }) => {
   const getItem = (id) => {
     switch (id) {
       case "1":
-        fetch("https://run.mocky.io/v3/e8250b06-aead-41a8-bef7-40b76b1cd9f8")
+        fetch("https://run.mocky.io/v3/e7135738-2699-4c03-a0e1-5b60aa26177d")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
       case "2":
-        fetch("https://run.mocky.io/v3/cc48552c-fb54-4f11-8174-44ffe7f4313a")
+        fetch("https://run.mocky.io/v3/335551dd-bb9c-49de-bcfc-938cba197bb2")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
       case "3":
-        fetch("https://run.mocky.io/v3/cf879ac7-457e-4454-a901-4609c9268931")
+        fetch("https://run.mocky.io/v3/4414e49e-7a88-442a-8631-b451e6fa3ac5")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
       case "4":
-        fetch("https://run.mocky.io/v3/5c30c425-aeb2-4fe6-bace-1edb001f1992")
+        fetch("https://run.mocky.io/v3/cdc090f4-f833-4f03-8380-d3dc8b321574")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
       case "5":
-        fetch("https://run.mocky.io/v3/4ae8d8f2-8af5-4187-9e14-df045af9efb7")
+        fetch("https://run.mocky.io/v3/548c082e-c3e1-4669-928b-a9033a448261")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
       case "6":
-        fetch("https://run.mocky.io/v3/b93f672b-0fe1-40f8-95d0-25f755b82d52")
+        fetch("https://run.mocky.io/v3/777d243c-680d-45aa-b266-a6b8d48fd9d5")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
       case "7":
-        fetch("https://run.mocky.io/v3/701d762b-7607-4cfe-8fcf-72cc99c61490")
+        fetch("https://run.mocky.io/v3/4cc33759-75a9-454a-94de-9250b8272a17")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
       case "8":
-        fetch("https://run.mocky.io/v3/826c3397-0a37-4498-bb47-46b0553741a3")
+        fetch("https://run.mocky.io/v3/8904970b-6227-43bc-8b52-14ce2044b3cf")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
         break;
       case "9":
-        fetch("https://run.mocky.io/v3/ed914520-eabf-4067-bbe2-a7f7be99704b")
+        fetch("https://run.mocky.io/v3/366d43a7-c01f-4abf-af1d-33cd7f9d6285")
           .then((res) => res.json())
           .then((data) => setCurrentProduct(data))
           .catch((e) => console.error(e));
@@ -196,7 +207,7 @@ const ProductDetail = ({ setLoading, loading }) => {
               {currentProduct.description}
             </Typography>
             <Typography variant="h5" className={classes.price}>
-              {currentProduct.price}
+              ${currentProduct.price}
             </Typography>
           </CardContent>
           {!isInCart(currentProduct.id) ? (
@@ -208,8 +219,10 @@ const ProductDetail = ({ setLoading, loading }) => {
             />
           ) : (
             <Box className={classes.onCartBox}>
-              <Button size="medium" className={classes.onCartButton} disabled>
-                Already in cart!
+              <Button size="medium" className={classes.onCartButton} >
+                <Link to={ROUTES.cart} className={classes.link}>
+                  View in cart
+                </Link>
               </Button>
             </Box>
           )}
@@ -233,7 +246,7 @@ ProductDetail.propTypes = {
     id: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    price: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
     stock: PropTypes.number.isRequired,
   }),
 };

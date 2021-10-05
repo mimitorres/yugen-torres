@@ -17,7 +17,7 @@ const FilteredProducts = ({ setLoading, loading }) => {
   }, [id]);
 
   const fetchFilteredProducts = async () => {
-    await fetch("https://run.mocky.io/v3/e92ed761-25f8-412a-b042-d97202872b4e")
+    await fetch("https://run.mocky.io/v3/3094a2bb-f55e-41bb-ba61-f6a434a2fb82")
       .then((res) => res.json())
       .then((data) => {
         setFilteredProducts(filterProducts(data, parseInt(id)));
