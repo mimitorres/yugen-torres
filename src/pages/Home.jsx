@@ -18,7 +18,6 @@ const Home = ({setLoading, loading}) => {
           const productsSnapshot = await getDocs(productsCollection);
           const productsList = productsSnapshot.docs.map((doc) => ({ firebaseId: doc.id, ...doc.data()}));
           setProducts(productsList);
-          
           setLoading(false);
       };
 

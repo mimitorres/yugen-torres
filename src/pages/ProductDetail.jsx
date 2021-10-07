@@ -21,6 +21,9 @@ import { CartContext } from "../context/CartContext";
 import { db } from "../firebase";
 import { doc, getDoc } from "firebase/firestore/lite";
 
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore/lite";
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
