@@ -33,6 +33,7 @@ const useStyles = makeStyles({
     flexDirection: "row",
     justifyContent: "space-around",
     maxWidth: "70em",
+    maxHeight: "40em",
   },
   imageContainer: {
     maxWidth: "35em",
@@ -41,6 +42,7 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    overflowY: "auto",
   },
   cardContent: {
     display: "flex",
@@ -121,12 +123,14 @@ const ProductDetail = ({ setLoading, loading }) => {
     addProduct(currentProduct, itemCount);
     setModalOpen(true);
   };
+
   const CustomButton = styled(Button)(({ theme }) => ({
     "& .MuiButton-label": {
       fontFamily: "Quicksand",
       textTransform: "none",
     },
   }));
+
   const getItem = async (id) => {
     const prodRef = doc(db, "products", id);
     const prodSnap = await getDoc(prodRef);
@@ -134,7 +138,6 @@ const ProductDetail = ({ setLoading, loading }) => {
     if (prodSnap.exists()) {
       setCurrentProduct(prodSnap.data());
     } else {
-      // doc.data() will be undefined in this case
       console.log("No such document!");
     }
   };
@@ -156,14 +159,20 @@ const ProductDetail = ({ setLoading, loading }) => {
             <Typography component="div" variant="h3" className={classes.title}>
               {currentProduct.title}
             </Typography>
-            <Typography
-              variant="subtitle1"
-              color="text.secondary"
-              component="div"
-              className={classes.description}
-            >
-              {currentProduct.description}
-            </Typography>
+            <Box className={classes.description}>
+              {currentProduct.description?.split("\\n").map((str, i) => {
+                return (
+                  <Typography
+                    variant="subtitle1"
+                    color="text.secondary"
+                    component="div"
+                    key={i}
+                  >
+                    {str}
+                  </Typography>
+                );
+              })}
+            </Box>
             <Typography variant="h5" className={classes.price}>
               ${currentProduct.price}
             </Typography>

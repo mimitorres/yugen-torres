@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     textDecoration: "none",
     color: "white",
     fontSize: "1.5em",
+    maxWidth: "fit-content",
   },
   navbar: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
