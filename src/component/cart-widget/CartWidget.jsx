@@ -1,7 +1,7 @@
 import { IconButton, Badge } from "@material-ui/core";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { makeStyles } from "@material-ui/styles";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 import { ROUTES } from "../../routes/routes";

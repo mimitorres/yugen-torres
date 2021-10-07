@@ -16,7 +16,7 @@ const Home = ({setLoading, loading}) => {
       const fetchProducts = async () => {
           let result = [];
           const productsRef = collection(db, "products");
-          const q = query(productsRef, orderBy("title"), limit(5));
+          const q = query(productsRef, orderBy("title"), limit(6));
           const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
             result.push({...doc.data(), fsId: doc.id});

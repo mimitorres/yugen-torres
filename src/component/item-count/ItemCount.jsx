@@ -1,11 +1,7 @@
 import {
   Button,
-  IconButton,
-  Divider,
   makeStyles,
-  Typography,
 } from "@material-ui/core";
-import { Add, Remove } from "@material-ui/icons";
 import PropTypes from 'prop-types';
 
 import Counter from "../counter/Counter";
