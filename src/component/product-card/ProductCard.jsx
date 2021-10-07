@@ -64,8 +64,8 @@ const ProductCard = ({ product }) => {
           </Typography>
         </CardContent>
       </CardActionArea>
-      <Link to={`/product/${product.id}`} className={classes.openButton}>
-        more
+      <Link to={`/product/${product.firebaseId}`} className={classes.openButton}>
+        More
       </Link>
     </Card>
   );

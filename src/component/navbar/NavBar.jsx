@@ -3,10 +3,16 @@ import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, IconButton } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 
+
+import { Link } from "react-router-dom";
+
+import { CartContext } from "../../context/CartContext";
+
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore/lite";
+
 import MenuDrawer from "../menu-drawer/MenuDrawer";
 import CartWidget from "../cart-widget/CartWidget";
-import { Link } from "react-router-dom";
-import { CartContext } from "../../context/CartContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -46,12 +52,17 @@ const NavBar = () => {
   }, []);
 
   const fetchCategories = async () => {
-    await fetch("https://run.mocky.io/v3/b79823ea-db54-46e3-93ee-1ac76fb5b08e")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((e) => console.error(e));
+    const categoriesCollection = collection(db, "/categories");
+    const categoriesSnapshot = await getDocs(categoriesCollection);
+    const categoriesList = categoriesSnapshot.docs.map((doc) => ({ firebaseId: doc.id, ...doc.data()}));
+    setCategories(categoriesList);
+
+  //   const categoriesCollection = collection(db,"categories");
+  //   categoriesCollection.get().then((querySnapshot) => {
+  //     querySnapshot.empty
+  //       ? console.log("No hay productos")
+  //       : setCategories(querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()})));
+  //   });
   };
 
   return (

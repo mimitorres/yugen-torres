@@ -20,6 +20,9 @@ import OnAddModal from "../component/on-add-modal/OnAddModal";
 import { CartContext } from "../context/CartContext";
 import { ROUTES } from "../routes/routes";
 
+import { db } from "../firebase";
+import { doc, getDoc } from "firebase/firestore/lite";
+
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -111,6 +114,7 @@ const ProductDetail = ({ setLoading, loading }) => {
   useEffect(() => {
     setLoading(true);
     getItem(id);
+    setLoading(false);
     // eslint-disable-next-line
   }, []);
 
@@ -118,76 +122,24 @@ const ProductDetail = ({ setLoading, loading }) => {
     addProduct(currentProduct, itemCount);
     setModalOpen(true);
   };
-
   const CustomButton = styled(Button)(({ theme }) => ({
     "& .MuiButton-label": {
       fontFamily: "Quicksand",
       textTransform: "none",
     },
 }));
+  const getItem = async(id) => {
+    setLoading(true);
 
-  const getItem = (id) => {
-    switch (id) {
-      case "1":
-        fetch("https://run.mocky.io/v3/e7135738-2699-4c03-a0e1-5b60aa26177d")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "2":
-        fetch("https://run.mocky.io/v3/335551dd-bb9c-49de-bcfc-938cba197bb2")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "3":
-        fetch("https://run.mocky.io/v3/4414e49e-7a88-442a-8631-b451e6fa3ac5")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "4":
-        fetch("https://run.mocky.io/v3/cdc090f4-f833-4f03-8380-d3dc8b321574")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "5":
-        fetch("https://run.mocky.io/v3/548c082e-c3e1-4669-928b-a9033a448261")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "6":
-        fetch("https://run.mocky.io/v3/777d243c-680d-45aa-b266-a6b8d48fd9d5")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "7":
-        fetch("https://run.mocky.io/v3/4cc33759-75a9-454a-94de-9250b8272a17")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "8":
-        fetch("https://run.mocky.io/v3/8904970b-6227-43bc-8b52-14ce2044b3cf")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      case "9":
-        fetch("https://run.mocky.io/v3/366d43a7-c01f-4abf-af1d-33cd7f9d6285")
-          .then((res) => res.json())
-          .then((data) => setCurrentProduct(data))
-          .catch((e) => console.error(e));
-        break;
-      default:
-        break;
+    const prodRef = doc(db, "products", id);
+    const prodSnap = await getDoc(prodRef);
+
+    if (prodSnap.exists()) {
+      setCurrentProduct(prodSnap.data());
+    } else {
+      // doc.data() will be undefined in this case
+      console.log("No such document!");
     }
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
   };
 
   return !loading ? (
@@ -237,13 +189,13 @@ const ProductDetail = ({ setLoading, loading }) => {
           )}
         </Box>
       </Card>
-      {modalOpen && 
+      {modalOpen && (
         <OnAddModal
           open={modalOpen}
           setOpen={setModalOpen}
           itemCount={itemCount}
         />
-      }
+      )}
     </Box>
   ) : (
     <Loading state={loading} />
