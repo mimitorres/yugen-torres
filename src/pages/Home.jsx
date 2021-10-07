@@ -14,18 +14,11 @@ const Home = ({setLoading, loading}) => {
       }, []);
     
       const fetchProducts = async () => {
-        // await fetch("https://run.mocky.io/v3/e92ed761-25f8-412a-b042-d97202872b4e")
-        //   .then((res) => res.json())
-        //   .then((data) => {
-        //     setProducts(data);
-        //     setLoading(false);
-        //   })
-        //   .catch((e) => console.error(e));
-
           const productsCollection = collection(db, "/products");
           const productsSnapshot = await getDocs(productsCollection);
           const productsList = productsSnapshot.docs.map((doc) => ({ firebaseId: doc.id, ...doc.data()}));
           setProducts(productsList);
+          
           setLoading(false);
       };
 
