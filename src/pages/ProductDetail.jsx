@@ -9,6 +9,7 @@ import {
   Fab,
   Button,
 } from "@material-ui/core";
+import { styled } from "@material-ui/styles";
 import { useParams, useHistory, Link } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -36,18 +37,20 @@ const useStyles = makeStyles({
   detailContainer: {
     display: "flex",
     flexDirection: "column",
+    justifyContent: "center",
   },
   cardContent: {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    flex: "1 0 auto",
+    justifyContent: "center",
   },
   title: {
     textAlign: "center",
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
+    fontWeight: "600",
   },
   description: {
     whiteSpace: "pre-wrap",
@@ -62,7 +65,6 @@ const useStyles = makeStyles({
     opacity: "65%",
     borderRadius: "10px",
     maxWidth: "10em",
-    marginTop: "auto",
   },
   button: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -79,16 +81,16 @@ const useStyles = makeStyles({
     borderRadius: 10,
     color: "white",
     fontWeight: "bold",
-    fontVariantCaps: "all-small-caps",
     maxWidth: "13em",
     width: "100%",
-    margin: "1em",
+    margin: "1em 0 1.5em",
     textAlign: "center",
+    fontFamily: "Quicksand",
   },
   link: {
     textDecoration: "none",
     color: "inherit",
-    fontWeight: "500",
+    fontWeight: "600",
   },
   count:{
     margin: "0.5em 0",
@@ -116,6 +118,13 @@ const ProductDetail = ({ setLoading, loading }) => {
     addProduct(currentProduct, itemCount);
     setModalOpen(true);
   };
+
+  const CustomButton = styled(Button)(({ theme }) => ({
+    "& .MuiButton-label": {
+      fontFamily: "Quicksand",
+      textTransform: "none",
+    },
+}));
 
   const getItem = (id) => {
     switch (id) {
@@ -219,11 +228,11 @@ const ProductDetail = ({ setLoading, loading }) => {
             />
           ) : (
             <Box className={classes.onCartBox}>
-              <Button size="medium" className={classes.onCartButton} >
+              <CustomButton size="medium" className={classes.onCartButton} >
                 <Link to={ROUTES.cart} className={classes.link}>
-                  View in cart
+                  go to cart!
                 </Link>
-              </Button>
+              </CustomButton>
             </Box>
           )}
         </Box>

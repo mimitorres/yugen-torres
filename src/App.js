@@ -1,4 +1,10 @@
-import { Container, makeStyles, Typography } from "@material-ui/core";
+import {
+  Container,
+  createTheme,
+  makeStyles,
+  Typography,
+  ThemeProvider,
+} from "@material-ui/core";
 import { useState } from "react";
 import {
   BrowserRouter as Router,
@@ -30,36 +36,49 @@ const App = () => {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
+  const theme = createTheme({
+    typography: {
+      fontFamily: [
+        "Quicksand",
+        "sans-serif",
+      ].join(","),
+    },
+  });
+
   return (
     <Router>
-      <CartContextProvider>
-        <NavBar />
-        <Container className={classes.content} fixed>
-          <Switch>
-            <Route path={ROUTES.home}>
-              <Home setLoading={setLoading} loading={loading} />
-            </Route>
-            <Route path={ROUTES.product}>
-              <ProductDetail setLoading={setLoading} loading={loading} />
-            </Route>
-            <Route path={ROUTES.category}>
-              <FilteredProducts setLoading={setLoading} loading={loading} />
-            </Route>
-            <Route path={ROUTES.cart}>
-              <Cart/>
-            </Route>
-            <Route path={ROUTES.checkout}>
-              <Typography variant="h2">Checkout in progress! (´｡• ◡ •｡`) ♡ </Typography>
-            </Route>
-            <Route exact path="/">
-              <Redirect to={ROUTES.home} />
-            </Route>
-            <Route path="*">
-              <Typography variant="h2">Not found! (｡•́︿•̀｡) </Typography>
-            </Route>
-          </Switch>
-        </Container>
-      </CartContextProvider>
+      <ThemeProvider theme={theme}>
+        <CartContextProvider>
+          <NavBar />
+          <Container className={classes.content} fixed>
+            <Switch>
+              <Route path={ROUTES.home}>
+                <Home setLoading={setLoading} loading={loading} />
+              </Route>
+              <Route path={ROUTES.product}>
+                <ProductDetail setLoading={setLoading} loading={loading} />
+              </Route>
+              <Route path={ROUTES.category}>
+                <FilteredProducts setLoading={setLoading} loading={loading} />
+              </Route>
+              <Route path={ROUTES.cart}>
+                <Cart />
+              </Route>
+              <Route path={ROUTES.checkout}>
+                <Typography variant="h2">
+                  Checkout in progress! (´｡• ◡ •｡`) ♡
+                </Typography>
+              </Route>
+              <Route exact path="/">
+                <Redirect to={ROUTES.home} />
+              </Route>
+              <Route path="*">
+                <Typography variant="h2">Not found! (｡•́︿•̀｡) </Typography>
+              </Route>
+            </Switch>
+          </Container>
+        </CartContextProvider>
+      </ThemeProvider>
     </Router>
   );
 };

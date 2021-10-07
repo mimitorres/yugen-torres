@@ -29,7 +29,6 @@ const useStyles = makeStyles({
     border: 0,
     borderRadius: 3,
     color: "white",
-    fontVariantCaps: "all-small-caps",
     maxWidth: "15em",
     width: "100%",
     marginTop: "auto",
@@ -37,6 +36,11 @@ const useStyles = makeStyles({
     padding: "0.5em",
     textDecoration: "none !important",
     textAlign: "center",
+    fontFamily: "Quicksand",
+  },
+  title:{
+    fontWeight: "600",
+    color: "slategrey",
   },
 });
 
@@ -52,7 +56,7 @@ const ProductCard = ({ product }) => {
           title={product.title}
         />
         <CardContent className={classes.productText}>
-          <Typography gutterBottom variant="h6" component="h2">
+          <Typography gutterBottom variant="h6" component="h2" className={classes.title}>
             {product.title}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
@@ -61,7 +65,7 @@ const ProductCard = ({ product }) => {
         </CardContent>
       </CardActionArea>
       <Link to={`/product/${product.id}`} className={classes.openButton}>
-        More
+        more
       </Link>
     </Card>
   );
