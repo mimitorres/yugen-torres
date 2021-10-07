@@ -115,7 +115,6 @@ const ProductDetail = ({ setLoading, loading }) => {
   useEffect(() => {
     setLoading(true);
     getItem(id);
-    setLoading(false);
     // eslint-disable-next-line
   }, []);
 
@@ -137,8 +136,10 @@ const ProductDetail = ({ setLoading, loading }) => {
 
     if (prodSnap.exists()) {
       setCurrentProduct(prodSnap.data());
+      setLoading(false);
     } else {
       console.log("No such document!");
+      setLoading(false);
     }
   };
 
