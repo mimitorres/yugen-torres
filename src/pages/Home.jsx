@@ -1,4 +1,4 @@
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { Box } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import ItemListContainer from '../component/item-list-container/ItemListContainer';
@@ -14,10 +14,14 @@ const Home = ({setLoading, loading}) => {
       }, []);
     
       const fetchProducts = async () => {
-          const productsCollection = collection(db, "/products");
-          const productsSnapshot = await getDocs(productsCollection);
-          const productsList = productsSnapshot.docs.map((doc) => ({ firebaseId: doc.id, ...doc.data()}));
-          setProducts(productsList);
+          let result = [];
+          const productsRef = collection(db, "products");
+          const q = query(productsRef, orderBy("title"), limit(5));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            result.push({...doc.data(), fsId: doc.id});
+          });
+          setProducts(result);
           setLoading(false);
       };
 

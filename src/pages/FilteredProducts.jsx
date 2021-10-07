@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ItemListContainer from "../component/item-list-container/ItemListContainer";
 import Loading from "../component/loading/Loading";
+import { db } from "../firebase";
+import { query, collection, where, getDocs } from "firebase/firestore";
 
 const FilteredProducts = ({ setLoading, loading }) => {
   const { id } = useParams();
@@ -17,17 +19,19 @@ const FilteredProducts = ({ setLoading, loading }) => {
   }, [id]);
 
   const fetchFilteredProducts = async () => {
-    await fetch("https://run.mocky.io/v3/3094a2bb-f55e-41bb-ba61-f6a434a2fb82")
-      .then((res) => res.json())
-      .then((data) => {
-        setFilteredProducts(filterProducts(data, parseInt(id)));
-        setTimeout(setLoading(false), 1000);
-      })
-      .catch((e) => console.error(e));
-  };
 
-  const filterProducts = (products, category) => {
-    return products.filter((p) => p.categories.includes(category));
+    let filteredProds = [];
+
+    const productsRef = collection(db, "products");
+    const q = query(productsRef, where("categories", "array-contains", parseInt(id)));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      filteredProds.push({...doc.data(), fsId: doc.id});
+    });
+
+    setFilteredProducts(filteredProds);
+    setLoading(false);
+
   };
 
   return !loading ? (

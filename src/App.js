@@ -34,7 +34,7 @@ const useStyles = makeStyles({
 
 const App = () => {
   const classes = useStyles();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const theme = createTheme({
     typography: {

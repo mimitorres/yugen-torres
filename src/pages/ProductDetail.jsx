@@ -21,7 +21,7 @@ import { CartContext } from "../context/CartContext";
 import { ROUTES } from "../routes/routes";
 
 import { db } from "../firebase";
-import { doc, getDoc } from "firebase/firestore/lite";
+import { doc, getDoc } from "firebase/firestore";
 
 const useStyles = makeStyles({
   root: {
@@ -95,9 +95,9 @@ const useStyles = makeStyles({
     color: "inherit",
     fontWeight: "600",
   },
-  count:{
+  count: {
     margin: "0.5em 0",
-  }
+  },
 });
 
 const ProductDetail = ({ setLoading, loading }) => {
@@ -109,7 +109,6 @@ const ProductDetail = ({ setLoading, loading }) => {
   const [currentProduct, setCurrentProduct] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [itemCount, setItemCount] = useState(1);
-
 
   useEffect(() => {
     setLoading(true);
@@ -127,10 +126,8 @@ const ProductDetail = ({ setLoading, loading }) => {
       fontFamily: "Quicksand",
       textTransform: "none",
     },
-}));
-  const getItem = async(id) => {
-    setLoading(true);
-
+  }));
+  const getItem = async (id) => {
     const prodRef = doc(db, "products", id);
     const prodSnap = await getDoc(prodRef);
 
@@ -180,7 +177,7 @@ const ProductDetail = ({ setLoading, loading }) => {
             />
           ) : (
             <Box className={classes.onCartBox}>
-              <CustomButton size="medium" className={classes.onCartButton} >
+              <CustomButton size="medium" className={classes.onCartButton}>
                 <Link to={ROUTES.cart} className={classes.link}>
                   go to cart!
                 </Link>

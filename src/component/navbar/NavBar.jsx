@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 
 import { db } from "../../firebase";
-import { collection, getDocs } from "firebase/firestore/lite";
+import { collection, getDocs } from "firebase/firestore";
 
 import MenuDrawer from "../menu-drawer/MenuDrawer";
 import CartWidget from "../cart-widget/CartWidget";
@@ -52,17 +52,13 @@ const NavBar = () => {
   }, []);
 
   const fetchCategories = async () => {
-    const categoriesCollection = collection(db, "/categories");
-    const categoriesSnapshot = await getDocs(categoriesCollection);
-    const categoriesList = categoriesSnapshot.docs.map((doc) => ({ firebaseId: doc.id, ...doc.data()}));
-    setCategories(categoriesList);
 
-  //   const categoriesCollection = collection(db,"categories");
-  //   categoriesCollection.get().then((querySnapshot) => {
-  //     querySnapshot.empty
-  //       ? console.log("No hay productos")
-  //       : setCategories(querySnapshot.docs.map((doc) => ({id: doc.id, ...doc.data()})));
-  //   });
+    const categoriesCollection = collection(db,"categories");
+    getDocs(categoriesCollection).then((querySnapshot) => {
+      querySnapshot.empty
+        ? console.error("No hay categorias")
+        : setCategories(querySnapshot.docs.map((doc) => ({fsId: doc.id, ...doc.data()})));
+    });
   };
 
   return (
