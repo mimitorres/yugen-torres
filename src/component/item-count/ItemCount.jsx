@@ -18,14 +18,15 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "1.5em",
   },
   button: {
+    fontWeight: "600",
+    color: "white",
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     border: 0,
     borderRadius: 3,
-    color: "white",
-    fontVariantCaps: "all-small-caps",
     maxWidth: "15em",
     width: "100%",
     marginTop: "0.5em",
+    textTransform: "none",
   },
 }));
 
@@ -51,7 +52,7 @@ const ItemCount = ({ stock, itemCount, setItemCount, onAdd }) => { //stock, setC
         onClick={onAdd}
         disabled={stock === 0}
       >
-        Add to Cart
+        add to cart
       </Button>
     </div>
   );
