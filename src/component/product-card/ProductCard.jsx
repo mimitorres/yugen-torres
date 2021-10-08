@@ -37,6 +37,7 @@ const useStyles = makeStyles({
     textDecoration: "none !important",
     textAlign: "center",
     fontFamily: "Quicksand",
+    fontWeight: "600",
   },
   title:{
     fontWeight: "600",

@@ -1,13 +1,9 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, Card, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import React from "react";
 
 const useStyles = makeStyles({
   border: {
-    border: "10px solid",
-    borderImageSlice: "1",
-    borderWidth: "2px",
-    borderImageSource: "linear-gradient(45deg, #FF8E53 30%, #FE6B8B 90%)",
     margin: "0.5em",
     padding: "0.5em",
   },
@@ -50,7 +46,7 @@ const OrderSummary = ({ products, totalProducts }) => {
   };
 
   return (
-    <Box className={classes.border}>
+    <Card className={classes.border}>
       <Typography variant="h6" className={classes.title}>
         YOUR ORDER SUMMARY
       </Typography>
@@ -66,7 +62,7 @@ const OrderSummary = ({ products, totalProducts }) => {
           ${getProductsSubtotal()}
         </Typography>
       </Box>
-    </Box>
+    </Card>
   );
 };
 

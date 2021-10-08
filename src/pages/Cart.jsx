@@ -32,11 +32,14 @@ const useStyles = makeStyles({
     border: 0,
     borderRadius: 3,
     color: "white",
-    fontVariantCaps: "all-small-caps",
-    maxWidth: "18.5em",
+    maxWidth: "15.5em",
     width: "100%",
     padding: "1em",
     textAlign: "center",
+    fontSize: "1em",
+    textTransform: "none",
+    fontWeight:"bold",
+    boxShadow: "2px 2px 5px lightslategrey",
   },
   fab: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -73,7 +76,7 @@ const Cart = () => {
           <Box className={classes.summaryContainer}>
             <OrderSummary products={products} totalProducts={totalProducts} />
             <Button className={classes.button}>
-              <Link to={ROUTES.checkout} className={classes.link}>Proceed to checkout!</Link>
+              <Link to={ROUTES.checkout} className={classes.link}>proceed to checkout!</Link>
             </Button>
           </Box>
         </Box>

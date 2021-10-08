@@ -16,12 +16,9 @@ import Counter from "../counter/Counter";
 const useStyles = makeStyles({
   row: {
     display: "flex",
+    minWidth:"35em",
     maxWidth: "40em",
     margin: "0.5em",
-    border: "10px solid",
-    borderImageSlice: "1",
-    borderWidth: "2px",
-    borderImageSource: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
   },
   image: {
     maxWidth: "12em",
@@ -30,6 +27,8 @@ const useStyles = makeStyles({
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+    minWidth: "22em",
+    width: "100%",
   },
   count: {
     display: "flex",
@@ -52,6 +51,8 @@ const useStyles = makeStyles({
   button: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     color: "white",
+    fontWeight: "600",
+    textTransform: "none",
   },
 });
 
@@ -68,8 +69,7 @@ const CartItem = ({ product, isLast }) => {
           alt={product.title}
           className={classes.image}
         />
-        <Box className={classes.detail}>
-          <CardContent sx={{ flex: "1 0 auto" }}>
+          <CardContent sx={{ flex: "1 0 auto" }} className={classes.detail}>
             <Typography component="div" variant="h5" className={classes.title}>
               {product.title}
             </Typography>
@@ -88,7 +88,6 @@ const CartItem = ({ product, isLast }) => {
               </Fab>
             </Box>
           </CardContent>
-        </Box>
       </Card>
       {!isLast && <Divider className={classes.divider} />}
     </>
