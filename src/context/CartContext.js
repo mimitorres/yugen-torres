@@ -8,6 +8,7 @@ const CartContextProvider = ({children}) => {
 
     useEffect(() => {
         updateTotalProducts();
+    // eslint-disable-next-line
     }, [products]);
 
     const addProduct = (item, quantity) => {

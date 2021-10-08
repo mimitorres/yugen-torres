@@ -1,12 +1,18 @@
 import { useContext, useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { AppBar, Toolbar, IconButton } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Box } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
+
+import { Link } from "react-router-dom";
+
+import { CartContext } from "../../context/CartContext";
+
+import { db } from "../../firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 import MenuDrawer from "../menu-drawer/MenuDrawer";
 import CartWidget from "../cart-widget/CartWidget";
-import { Link } from "react-router-dom";
-import { CartContext } from "../../context/CartContext";
+import { ROUTES } from "../../routes/routes";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,9 +27,16 @@ const useStyles = makeStyles((theme) => ({
     alignContent: "center",
     textDecoration: "none",
     color: "white",
-    fontSize: "1.5em",
+    fontSize: "1.7em",
+  },
+  content: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
   },
   navbar: {
+    display: "flex",
+    justifyContent: "space-between",
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     border: 0,
     borderRadius: 3,
@@ -32,6 +45,9 @@ const useStyles = makeStyles((theme) => ({
     height: 48,
     padding: "0 30px",
   },
+  widget: {
+    alignSelf: "end",
+  },
 }));
 
 const NavBar = () => {
@@ -39,37 +55,41 @@ const NavBar = () => {
 
   const [drawerState, setDrawerState] = useState(false);
   const [categories, setCategories] = useState([]);
-  const {products} = useContext(CartContext);
+  const { products } = useContext(CartContext);
 
   useEffect(() => {
     fetchCategories();
   }, []);
 
   const fetchCategories = async () => {
-    await fetch("https://run.mocky.io/v3/b79823ea-db54-46e3-93ee-1ac76fb5b08e")
-      .then((res) => res.json())
-      .then((data) => {
-        setCategories(data);
-      })
-      .catch((e) => console.error(e));
+    const categoriesCollection = collection(db, "categories");
+    getDocs(categoriesCollection).then((querySnapshot) => {
+      querySnapshot.empty
+        ? console.error("No hay categorias")
+        : setCategories(
+            querySnapshot.docs.map((doc) => ({ fsId: doc.id, ...doc.data() }))
+          );
+    });
   };
 
   return (
     <AppBar position="sticky">
       <Toolbar className={classes.navbar}>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          className={classes.menuButton}
-          onClick={() => setDrawerState(true)}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Link to={"/"} variant="h6" className={classes.title}>
-          幽玄
-        </Link>
-        {products.length > 0 && <CartWidget />}
+        <Box className={classes.content}>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            className={classes.menuButton}
+            onClick={() => setDrawerState(true)}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Link to={ROUTES.home} variant="h6" className={classes.title}>
+            幽玄
+          </Link>
+        </Box>
+        {products.length > 0 && <CartWidget className={classes.widget} />}
       </Toolbar>
       <MenuDrawer
         state={drawerState}

@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
   },
   text: {
     color: 'ivory',
-    fontVariantCaps:'petite-caps',
+    fontWeight: "bold",
   },
 }));
 

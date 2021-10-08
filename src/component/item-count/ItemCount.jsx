@@ -1,11 +1,7 @@
 import {
   Button,
-  IconButton,
-  Divider,
   makeStyles,
-  Typography,
 } from "@material-ui/core";
-import { Add, Remove } from "@material-ui/icons";
 import PropTypes from 'prop-types';
 
 import Counter from "../counter/Counter";
@@ -15,17 +11,18 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: "0 1em 1em",
+    marginBottom: "1.5em",
   },
   button: {
+    fontWeight: "600",
+    color: "white",
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     border: 0,
     borderRadius: 3,
-    color: "white",
-    fontVariantCaps: "all-small-caps",
     maxWidth: "15em",
     width: "100%",
     marginTop: "0.5em",
+    textTransform: "none",
   },
 }));
 
@@ -51,7 +48,7 @@ const ItemCount = ({ stock, itemCount, setItemCount, onAdd }) => { //stock, setC
         onClick={onAdd}
         disabled={stock === 0}
       >
-        Add to Cart
+        add to cart
       </Button>
     </div>
   );

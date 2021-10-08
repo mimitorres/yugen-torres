@@ -1,5 +1,4 @@
 import { Box, Button, Typography } from "@material-ui/core";
-import { RouterSharp } from "@material-ui/icons";
 import { makeStyles } from "@material-ui/styles";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../../routes/routes";

@@ -1,7 +1,9 @@
+import { collection, getDocs, query, orderBy, limit } from "firebase/firestore";
 import { Box } from '@material-ui/core';
 import React, { useEffect, useState } from 'react'
 import ItemListContainer from '../component/item-list-container/ItemListContainer';
 import Loading from '../component/loading/Loading';
+import { db } from '../firebase';
 
 const Home = ({setLoading, loading}) => {
     const [products, setProducts] = useState([]);
@@ -12,13 +14,15 @@ const Home = ({setLoading, loading}) => {
       }, []);
     
       const fetchProducts = async () => {
-        await fetch("https://run.mocky.io/v3/3094a2bb-f55e-41bb-ba61-f6a434a2fb82")
-          .then((res) => res.json())
-          .then((data) => {
-            setProducts(data);
-            setLoading(false);
-          })
-          .catch((e) => console.error(e));
+          let result = [];
+          const productsRef = collection(db, "products");
+          const q = query(productsRef, orderBy("title"), limit(6));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((doc) => {
+            result.push({...doc.data(), fsId: doc.id});
+          });
+          setProducts(result);
+          setLoading(false);
       };
 
     return (
