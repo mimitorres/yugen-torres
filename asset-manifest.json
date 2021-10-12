@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/yugen-torres/static/css/main.c819533d.chunk.css",
-    "main.js": "/yugen-torres/static/js/main.c0530ae2.chunk.js",
-    "main.js.map": "/yugen-torres/static/js/main.c0530ae2.chunk.js.map",
+    "main.js": "/yugen-torres/static/js/main.907d93fd.chunk.js",
+    "main.js.map": "/yugen-torres/static/js/main.907d93fd.chunk.js.map",
     "runtime-main.js": "/yugen-torres/static/js/runtime-main.c1feedd5.js",
     "runtime-main.js.map": "/yugen-torres/static/js/runtime-main.c1feedd5.js.map",
     "static/js/2.596551ef.chunk.js": "/yugen-torres/static/js/2.596551ef.chunk.js",
@@ -17,6 +17,6 @@
     "static/js/runtime-main.c1feedd5.js",
     "static/js/2.596551ef.chunk.js",
     "static/css/main.c819533d.chunk.css",
-    "static/js/main.c0530ae2.chunk.js"
+    "static/js/main.907d93fd.chunk.js"
   ]
 }
