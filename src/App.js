@@ -21,6 +21,7 @@ import FilteredProducts from "./pages/FilteredProducts";
 
 import CartContextProvider from "./context/CartContext";
 import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
 
 const useStyles = makeStyles({
   appContainer: {
@@ -65,9 +66,7 @@ const App = () => {
                 <Cart />
               </Route>
               <Route path={ROUTES.checkout}>
-                <Typography variant="h2">
-                  Checkout in progress! (´｡• ◡ •｡`) ♡
-                </Typography>
+                <Checkout/>
               </Route>
               <Route exact path="/">
                 <Redirect to={ROUTES.home} />
