@@ -135,12 +135,18 @@ const ProductDetail = ({ setLoading, loading }) => {
     const prodSnap = await getDoc(prodRef);
 
     if (prodSnap.exists()) {
-      setCurrentProduct(prodSnap.data());
+      const product = getSanitizedProduct(prodSnap);
+      setCurrentProduct(product);
       setLoading(false);
     } else {
       console.log("No such document!");
       setLoading(false);
     }
+  };
+
+  const getSanitizedProduct = (productSnap) => {
+    const data = productSnap.data();
+    return { ...data, description: data.description.replaceAll("\\n", "\n") };
   };
 
   return !loading ? (
@@ -161,18 +167,13 @@ const ProductDetail = ({ setLoading, loading }) => {
               {currentProduct.title}
             </Typography>
             <Box className={classes.description}>
-              {currentProduct.description?.split("\\n").map((str, i) => {
-                return (
-                  <Typography
-                    variant="subtitle1"
-                    color="text.secondary"
-                    component="div"
-                    key={i}
-                  >
-                    {str}
-                  </Typography>
-                );
-              })}
+              <Typography
+                variant="subtitle1"
+                color="text.secondary"
+                component="div"
+              >
+                {currentProduct.description}
+              </Typography>
             </Box>
             <Typography variant="h5" className={classes.price}>
               ${currentProduct.price}
