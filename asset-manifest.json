@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/yugen/static/css/main.c819533d.chunk.css",
-    "main.js": "/yugen/static/js/main.96f26b85.chunk.js",
-    "main.js.map": "/yugen/static/js/main.96f26b85.chunk.js.map",
-    "runtime-main.js": "/yugen/static/js/runtime-main.16594b56.js",
-    "runtime-main.js.map": "/yugen/static/js/runtime-main.16594b56.js.map",
-    "static/js/2.11471796.chunk.js": "/yugen/static/js/2.11471796.chunk.js",
-    "static/js/2.11471796.chunk.js.map": "/yugen/static/js/2.11471796.chunk.js.map",
-    "static/js/3.557e8e85.chunk.js": "/yugen/static/js/3.557e8e85.chunk.js",
-    "static/js/3.557e8e85.chunk.js.map": "/yugen/static/js/3.557e8e85.chunk.js.map",
-    "index.html": "/yugen/index.html",
-    "static/css/main.c819533d.chunk.css.map": "/yugen/static/css/main.c819533d.chunk.css.map",
-    "static/js/2.11471796.chunk.js.LICENSE.txt": "/yugen/static/js/2.11471796.chunk.js.LICENSE.txt"
+    "main.css": "/yugen-torres/static/css/main.c819533d.chunk.css",
+    "main.js": "/yugen-torres/static/js/main.96f26b85.chunk.js",
+    "main.js.map": "/yugen-torres/static/js/main.96f26b85.chunk.js.map",
+    "runtime-main.js": "/yugen-torres/static/js/runtime-main.c1feedd5.js",
+    "runtime-main.js.map": "/yugen-torres/static/js/runtime-main.c1feedd5.js.map",
+    "static/js/2.596551ef.chunk.js": "/yugen-torres/static/js/2.596551ef.chunk.js",
+    "static/js/2.596551ef.chunk.js.map": "/yugen-torres/static/js/2.596551ef.chunk.js.map",
+    "static/js/3.557e8e85.chunk.js": "/yugen-torres/static/js/3.557e8e85.chunk.js",
+    "static/js/3.557e8e85.chunk.js.map": "/yugen-torres/static/js/3.557e8e85.chunk.js.map",
+    "index.html": "/yugen-torres/index.html",
+    "static/css/main.c819533d.chunk.css.map": "/yugen-torres/static/css/main.c819533d.chunk.css.map",
+    "static/js/2.596551ef.chunk.js.LICENSE.txt": "/yugen-torres/static/js/2.596551ef.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
-    "static/js/runtime-main.16594b56.js",
-    "static/js/2.11471796.chunk.js",
+    "static/js/runtime-main.c1feedd5.js",
+    "static/js/2.596551ef.chunk.js",
     "static/css/main.c819533d.chunk.css",
     "static/js/main.96f26b85.chunk.js"
   ]
