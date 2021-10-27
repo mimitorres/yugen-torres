@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Paper, styled, SvgIcon, Typography } from "@material-ui/core";
+import { Button, Paper, styled, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGhost } from "@fortawesome/free-solid-svg-icons";

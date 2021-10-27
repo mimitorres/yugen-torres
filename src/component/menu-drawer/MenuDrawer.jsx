@@ -31,7 +31,7 @@ const ListContainer = ({ categories }) => {
         {categories.map((c) => (
           <ListItem button key={c.id}>
             {c.icon && <ListItemIcon>{c.icon}</ListItemIcon>}
-            <NavLink to={`/category/${c.id}`} className={classes.link}>{c.name}</NavLink>
+            <NavLink to={`/category/${c.name}`} className={classes.link}>{c.name}</NavLink>
           </ListItem>
         ))}
       </List>

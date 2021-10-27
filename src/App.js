@@ -2,7 +2,6 @@ import {
   Container,
   createTheme,
   makeStyles,
-  Typography,
   ThemeProvider,
 } from "@material-ui/core";
 import { useState } from "react";
