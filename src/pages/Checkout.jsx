@@ -20,7 +20,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     width: "50em",
-    height: "30em",
+    minHeight: "30em",
+    height: "fit-content",
   },
   title: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -72,6 +73,17 @@ const validationSchema = yup.object({
     .min(8, "Phone should have at least 8 characters")
     .matches(/^[0-9]+$/g, "Not a valid phone")
     .required("Phone is required"),
+  buyerRepeatEmail: yup
+    .string("Repeat your email")
+    .required("Email confirmation is required")
+    .when('buyerEmail', (buyerEmail) => {
+      if (buyerEmail) {
+          return yup
+          .string()
+          .required("Email confirmation is required")
+          .matches(buyerEmail, "Must match your previous email");
+      }
+  }),
 });
 
 const Checkout = () => {
@@ -81,6 +93,7 @@ const Checkout = () => {
     initialValues: {
       buyerName: "",
       buyerEmail: "",
+      buyerRepeatEmail: "",
       buyerPhone: "",
     },
     validateOnMount: false,
@@ -157,6 +170,20 @@ const Checkout = () => {
               formik.touched.buyerEmail && Boolean(formik.errors.buyerEmail)
             }
             helperText={formik.touched.buyerEmail && formik.errors.buyerEmail}
+          />
+          <TextField
+            id="buyerRepeatEmail"
+            name="buyerRepeatEmail"
+            label="Repeat Email"
+            className={classes.fields}
+            color="secondary"
+            value={formik.values.buyerRepeatEmail}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.buyerRepeatEmail && Boolean(formik.errors.buyerRepeatEmail)
+            }
+            helperText={formik.touched.buyerRepeatEmail && formik.errors.buyerRepeatEmail}
           />
           <TextField
             id="buyerPhone"
