@@ -109,6 +109,7 @@ const Checkout = () => {
         price: p.price,
         quantity: p.quantity,
       })),
+      orderStatus: "created",
       total: getProductsSubtotal(),
       date: new Date(),
     };
