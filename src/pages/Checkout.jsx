@@ -64,6 +64,10 @@ const validationSchema = yup.object({
     .string("Enter your name")
     .min(4, "Name should be of minimum 4 characters length")
     .required("Name is required"),
+  buyerLastName: yup
+    .string("Enter your last name")
+    .min(2, "Last name should be of minimum 4 characters length")
+    .required("Last Name is required"),
   buyerEmail: yup
     .string("Enter your email")
     .email("Enter a valid email")
@@ -92,6 +96,7 @@ const Checkout = () => {
   const formik = useFormik({
     initialValues: {
       buyerName: "",
+      buyerLastName: "",
       buyerEmail: "",
       buyerRepeatEmail: "",
       buyerPhone: "",
@@ -114,6 +119,7 @@ const Checkout = () => {
     const order = {
       buyer: {
         name: values.buyerName,
+        lastName: values.buyerLastName,
         email: values.buyerEmail,
         phone: values.buyerPhone,
       },
@@ -130,7 +136,7 @@ const Checkout = () => {
     // Add a new document with a generated id.
     addDoc(collection(db, "orders"), order)
       .then((ref) => {
-        console.log("Document written with ID: ", ref);
+        console.log("Document written with ID: ", ref.id);
         clearCart();
         history.push(ROUTES.home);
       })
@@ -147,7 +153,7 @@ const Checkout = () => {
           <TextField
             id="buyerName"
             name="buyerName"
-            label="Full Name"
+            label="First Name"
             className={classes.fields}
             color="secondary"
             value={formik.values.buyerName}
@@ -155,6 +161,18 @@ const Checkout = () => {
             onBlur={formik.handleBlur}
             error={formik.touched.buyerName && Boolean(formik.errors.buyerName)}
             helperText={formik.touched.buyerName && formik.errors.buyerName}
+          />
+          <TextField
+            id="buyerLastName"
+            name="buyerLastName"
+            label="Last Name"
+            className={classes.fields}
+            color="secondary"
+            value={formik.values.buyerLastName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.buyerLastName && Boolean(formik.errors.buyerLastName)}
+            helperText={formik.touched.buyerLastName && formik.errors.buyerLastName}
           />
 
           <TextField
