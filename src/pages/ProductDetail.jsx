@@ -10,13 +10,15 @@ import {
   Button,
 } from "@material-ui/core";
 import { styled } from "@material-ui/styles";
+import { ArrowBack } from "@material-ui/icons";
 import { useParams, useHistory, Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import { isEmpty } from "lodash";
 
 import ItemCount from "../component/item-count/ItemCount";
-import { ArrowBack } from "@material-ui/icons";
 import Loading from "../component/loading/Loading";
 import OnAddModal from "../component/on-add-modal/OnAddModal";
+import NotFound from "../pages/NotFound";
 import { CartContext } from "../context/CartContext";
 import { ROUTES } from "../routes/routes";
 
@@ -111,7 +113,8 @@ const ProductDetail = ({ setLoading, loading }) => {
   const [currentProduct, setCurrentProduct] = useState({});
   const [modalOpen, setModalOpen] = useState(false);
   const [itemCount, setItemCount] = useState(1);
-
+  const [productNotFound, setProductNotFound] = useState(false);
+  
   useEffect(() => {
     setLoading(true);
     getItem(id);
@@ -141,6 +144,7 @@ const ProductDetail = ({ setLoading, loading }) => {
     } else {
       console.log("No such document!");
       setLoading(false);
+      setProductNotFound(true);
     }
   };
 
@@ -150,7 +154,7 @@ const ProductDetail = ({ setLoading, loading }) => {
   };
 
   return !loading ? (
-    <Box className={classes.root}>
+    !productNotFound ? (<Box className={classes.root}>
       <Fab className={classes.button} onClick={() => history.goBack()}>
         <ArrowBack />
       </Fab>
@@ -204,7 +208,7 @@ const ProductDetail = ({ setLoading, loading }) => {
           itemCount={itemCount}
         />
       )}
-    </Box>
+    </Box>) : <NotFound/>
   ) : (
     <Loading state={loading} />
   );
