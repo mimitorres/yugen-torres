@@ -20,7 +20,8 @@ const useStyles = makeStyles({
     flexDirection: "column",
     alignItems: "center",
     width: "50em",
-    height: "30em",
+    minHeight: "30em",
+    height: "fit-content",
   },
   title: {
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
@@ -63,6 +64,10 @@ const validationSchema = yup.object({
     .string("Enter your name")
     .min(4, "Name should be of minimum 4 characters length")
     .required("Name is required"),
+  buyerLastName: yup
+    .string("Enter your last name")
+    .min(2, "Last name should be of minimum 4 characters length")
+    .required("Last Name is required"),
   buyerEmail: yup
     .string("Enter your email")
     .email("Enter a valid email")
@@ -72,6 +77,17 @@ const validationSchema = yup.object({
     .min(8, "Phone should have at least 8 characters")
     .matches(/^[0-9]+$/g, "Not a valid phone")
     .required("Phone is required"),
+  buyerRepeatEmail: yup
+    .string("Repeat your email")
+    .required("Email confirmation is required")
+    .when('buyerEmail', (buyerEmail) => {
+      if (buyerEmail) {
+          return yup
+          .string()
+          .required("Email confirmation is required")
+          .matches(buyerEmail, "Must match your previous email");
+      }
+  }),
 });
 
 const Checkout = () => {
@@ -80,7 +96,9 @@ const Checkout = () => {
   const formik = useFormik({
     initialValues: {
       buyerName: "",
+      buyerLastName: "",
       buyerEmail: "",
+      buyerRepeatEmail: "",
       buyerPhone: "",
     },
     validateOnMount: false,
@@ -101,6 +119,7 @@ const Checkout = () => {
     const order = {
       buyer: {
         name: values.buyerName,
+        lastName: values.buyerLastName,
         email: values.buyerEmail,
         phone: values.buyerPhone,
       },
@@ -109,6 +128,7 @@ const Checkout = () => {
         price: p.price,
         quantity: p.quantity,
       })),
+      orderStatus: "created",
       total: getProductsSubtotal(),
       date: new Date(),
     };
@@ -116,7 +136,7 @@ const Checkout = () => {
     // Add a new document with a generated id.
     addDoc(collection(db, "orders"), order)
       .then((ref) => {
-        console.log("Document written with ID: ", ref);
+        console.log("Document written with ID: ", ref.id);
         clearCart();
         history.push(ROUTES.home);
       })
@@ -133,7 +153,7 @@ const Checkout = () => {
           <TextField
             id="buyerName"
             name="buyerName"
-            label="Full Name"
+            label="First Name"
             className={classes.fields}
             color="secondary"
             value={formik.values.buyerName}
@@ -141,6 +161,18 @@ const Checkout = () => {
             onBlur={formik.handleBlur}
             error={formik.touched.buyerName && Boolean(formik.errors.buyerName)}
             helperText={formik.touched.buyerName && formik.errors.buyerName}
+          />
+          <TextField
+            id="buyerLastName"
+            name="buyerLastName"
+            label="Last Name"
+            className={classes.fields}
+            color="secondary"
+            value={formik.values.buyerLastName}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={formik.touched.buyerLastName && Boolean(formik.errors.buyerLastName)}
+            helperText={formik.touched.buyerLastName && formik.errors.buyerLastName}
           />
 
           <TextField
@@ -156,6 +188,20 @@ const Checkout = () => {
               formik.touched.buyerEmail && Boolean(formik.errors.buyerEmail)
             }
             helperText={formik.touched.buyerEmail && formik.errors.buyerEmail}
+          />
+          <TextField
+            id="buyerRepeatEmail"
+            name="buyerRepeatEmail"
+            label="Repeat Email"
+            className={classes.fields}
+            color="secondary"
+            value={formik.values.buyerRepeatEmail}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            error={
+              formik.touched.buyerRepeatEmail && Boolean(formik.errors.buyerRepeatEmail)
+            }
+            helperText={formik.touched.buyerRepeatEmail && formik.errors.buyerRepeatEmail}
           />
           <TextField
             id="buyerPhone"
