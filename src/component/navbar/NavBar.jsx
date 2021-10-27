@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { AppBar, Toolbar, IconButton, Box } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 
 import { Link } from "react-router-dom";
-
-import { CartContext } from "../../context/CartContext";
 
 import { db } from "../../firebase";
 import { collection, getDocs } from "firebase/firestore";
@@ -55,7 +53,6 @@ const NavBar = () => {
 
   const [drawerState, setDrawerState] = useState(false);
   const [categories, setCategories] = useState([]);
-  const { products } = useContext(CartContext);
 
   useEffect(() => {
     fetchCategories();
@@ -89,7 +86,7 @@ const NavBar = () => {
             幽玄
           </Link>
         </Box>
-        {products.length > 0 && <CartWidget className={classes.widget} />}
+        <CartWidget className={classes.widget} />
       </Toolbar>
       <MenuDrawer
         state={drawerState}
