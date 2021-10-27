@@ -7,23 +7,38 @@ import { db } from "../firebase";
 import { query, collection, where, getDocs } from "firebase/firestore";
 
 const FilteredProducts = ({ setLoading, loading }) => {
-  const { id } = useParams();
+  const { name } = useParams();
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState({});
 
   useEffect(() => {
-    if (id) {
+    if (name) {
       setLoading(true);
-      fetchFilteredProducts();
+      fetchSelectedCategory().catch((e) => console.error(e));
     }
     // eslint-disable-next-line
-  }, [id]);
+  }, [name]);
+
+  useEffect(() => {
+      fetchFilteredProducts().catch((e) => console.error(e));
+    // eslint-disable-next-line
+  }, [currentCategory]);
+
+  const fetchSelectedCategory = async () => {
+    const categoriesRef = collection(db, "categories");
+    const q = query(categoriesRef, where("name", "==", name));
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      setCurrentCategory({...doc.data(), fsId: doc.id});
+    });
+  }
 
   const fetchFilteredProducts = async () => {
 
     let filteredProds = [];
 
     const productsRef = collection(db, "products");
-    const q = query(productsRef, where("categories", "array-contains", parseInt(id)));
+    const q = query(productsRef, where("categories", "array-contains", parseInt(currentCategory.id)));
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
       filteredProds.push({...doc.data(), fsId: doc.id});
@@ -31,7 +46,6 @@ const FilteredProducts = ({ setLoading, loading }) => {
 
     setFilteredProducts(filteredProds);
     setLoading(false);
-
   };
 
   return !loading ? (

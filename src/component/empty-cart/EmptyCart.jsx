@@ -4,7 +4,6 @@ import {
   Button,
   Paper,
   styled,
-  SvgIcon,
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";

@@ -13,7 +13,6 @@ import { styled } from "@material-ui/styles";
 import { ArrowBack } from "@material-ui/icons";
 import { useParams, useHistory, Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { isEmpty } from "lodash";
 
 import ItemCount from "../component/item-count/ItemCount";
 import Loading from "../component/loading/Loading";
