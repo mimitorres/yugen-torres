@@ -22,6 +22,7 @@ import FilteredProducts from "./pages/FilteredProducts";
 import CartContextProvider from "./context/CartContext";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
+import NotFound from "./pages/NotFound";
 
 const useStyles = makeStyles({
   appContainer: {
@@ -72,7 +73,7 @@ const App = () => {
                 <Redirect to={ROUTES.home} />
               </Route>
               <Route path="*">
-                <Typography variant="h2">Not found! (｡•́︿•̀｡) </Typography>
+                <NotFound/>
               </Route>
             </Switch>
           </Container>
