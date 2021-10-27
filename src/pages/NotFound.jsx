@@ -14,6 +14,7 @@ const useStyles = makeStyles({
     width: "50em",
     justifyContent: "space-evenly",
     alignItems: "center",
+    margin: "auto",
   },
   text: {
     textAlign: "center",

@@ -1,8 +1,12 @@
 import { Box } from "@material-ui/core";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import { isEmpty } from "lodash";
+
 import ItemListContainer from "../component/item-list-container/ItemListContainer";
 import Loading from "../component/loading/Loading";
+import NotFound from "../pages/NotFound";
+
 import { db } from "../firebase";
 import { query, collection, where, getDocs } from "firebase/firestore";
 
@@ -10,6 +14,7 @@ const FilteredProducts = ({ setLoading, loading }) => {
   const { name } = useParams();
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [currentCategory, setCurrentCategory] = useState({});
+  const [categoryNotFound, setCategoryNotFound] = useState(false);
 
   useEffect(() => {
     if (name) {
@@ -20,7 +25,13 @@ const FilteredProducts = ({ setLoading, loading }) => {
   }, [name]);
 
   useEffect(() => {
+    if(!isEmpty(currentCategory)){
+      setCategoryNotFound(false);
       fetchFilteredProducts().catch((e) => console.error(e));
+    } else {
+      setCategoryNotFound(true);
+      setLoading(false);
+    }
     // eslint-disable-next-line
   }, [currentCategory]);
 
@@ -49,7 +60,7 @@ const FilteredProducts = ({ setLoading, loading }) => {
   };
 
   return !loading ? (
-    <Box>
+    categoryNotFound ? <NotFound/> : <Box>
       <ItemListContainer products={filteredProducts} />
     </Box>
   ) : (
