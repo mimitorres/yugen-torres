@@ -124,7 +124,7 @@ const Checkout = () => {
         phone: values.buyerPhone,
       },
       items: products.map((p) => ({
-        id: p.id,
+        id: p.fsId,
         price: p.price,
         quantity: p.quantity,
       })),

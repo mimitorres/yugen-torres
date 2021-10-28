@@ -22,6 +22,7 @@ import CartContextProvider from "./context/CartContext";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import NotFound from "./pages/NotFound";
+import OrderSuccess from "./pages/OrderSuccess";
 
 const useStyles = makeStyles({
   appContainer: {
@@ -67,6 +68,9 @@ const App = () => {
               </Route>
               <Route path={ROUTES.checkout}>
                 <Checkout/>
+              </Route>
+              <Route path={ROUTES.success}>
+                <OrderSuccess setLoading={setLoading} loading={loading} />
               </Route>
               <Route exact path="/">
                 <Redirect to={ROUTES.home} />
