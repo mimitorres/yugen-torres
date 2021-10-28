@@ -7,17 +7,17 @@ import { doc, getDoc } from "firebase/firestore";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
-  container:{
-    display:"flex",
-    textAlign:"center",
-    flexDirection:"column",
+  container: {
+    display: "flex",
+    textAlign: "center",
+    flexDirection: "column",
   },
-  accent:{
+  accent: {
     textAlign: "center",
     background: "linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)",
     WebkitBackgroundClip: "text",
     WebkitTextFillColor: "transparent",
-    fontWeight:"600",
+    fontWeight: "600",
   },
 });
 
@@ -34,50 +34,48 @@ const OrderSuccess = ({ loading, setLoading }) => {
   }, []);
 
   useEffect(() => {
-    if(!isEmpty(currentOrder)){
+    if (!isEmpty(currentOrder)) {
       getOrderProducts(currentOrder.items).then(products => {
         setOrderedProducts(products);
       }).catch((e) => console.error(e));
     }
   }, [currentOrder]);
 
-  const getOrder = async(id) => {
+  const getOrder = async (id) => {
     const orderRef = doc(db, "orders", id);
     const orderSnap = await getDoc(orderRef);
 
-    setCurrentOrder({ ...orderSnap.data() , id: orderSnap.id });
+    setCurrentOrder({ ...orderSnap.data(), id: orderSnap.id });
     setLoading(false);
   };
 
-  const getOrderProducts = async(products) => {
-    let orderProducts = [];
-    products.forEach(p => {
-      getProduct(p.id).then(p => orderProducts.push(p));
-    });
+  const getOrderProducts = async (products) => {
+    return await products.reduce(async (orderProducts, currentProduct) => {
+      const product = await getProduct(currentProduct.id);
+      return [...orderProducts, product];
+  }, []);
+};
 
-    return orderProducts;
-  };
+const getProduct = async (id) => {
+  const productRef = doc(db, "products", id);
+  const productSnap = await getDoc(productRef);
 
-  const getProduct = async(id) => {
-    const productRef = doc(db, "products", id);
-    const productSnap = await getDoc(productRef);
+  return { ...productSnap.data(), fsId: productSnap.id };
+};
 
-    return { ...productSnap.data(), fsId: productSnap.id };
-  };
-
-  return !isEmpty(currentOrder) && (
-    <Box>
-      <Paper className={classes.container}>
-          <Typography variant="h5">
-            {currentOrder.buyer.name} {currentOrder.buyer.lastName} 
-          </Typography>
-          <Typography  variant="h5">
-            Your order <span className={classes.accent}>#{currentOrder.id}</span> was generated!
-          </Typography> 
-          {orderedProducts?.map(p => <Typography key={p.title}>{p.title}</Typography>)}
-      </Paper>
-    </Box>
-  );
+return !isEmpty(currentOrder) && (
+  <Box>
+    <Paper className={classes.container}>
+      <Typography variant="h5">
+        {currentOrder.buyer.name} {currentOrder.buyer.lastName}
+      </Typography>
+      <Typography variant="h5">
+        Your order <span className={classes.accent}>#{currentOrder.id}</span> was generated!
+      </Typography>
+      {orderedProducts?.map(p => <Typography key={p.title}>{p.title}</Typography>)}
+    </Paper>
+  </Box>
+);
 };
 
 export default OrderSuccess;

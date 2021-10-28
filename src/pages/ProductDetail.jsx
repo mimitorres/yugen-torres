@@ -172,7 +172,7 @@ const ProductDetail = ({ setLoading, loading }) => {
             <Box className={classes.description}>
               <Typography
                 variant="subtitle1"
-                color="text.secondary"
+                color="textSecondary"
                 component="div"
               >
                 {currentProduct.description}
