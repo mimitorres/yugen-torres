@@ -140,7 +140,7 @@ const Checkout = () => {
       .then((ref) => {
         console.log("Document written with ID: ", ref.id);
         clearCart();
-        history.push(ROUTES.home);
+        history.push(`/order/${ref.id}/success`);
       })
       .catch((e) => console.log(e));
   };
