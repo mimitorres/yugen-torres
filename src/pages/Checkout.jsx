@@ -126,6 +126,8 @@ const Checkout = () => {
       items: products.map((p) => ({
         id: p.fsId,
         price: p.price,
+        title: p.title,
+        image: p.imageUrl,
         quantity: p.quantity,
       })),
       orderStatus: "created",
