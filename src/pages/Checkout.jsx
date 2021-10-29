@@ -124,8 +124,10 @@ const Checkout = () => {
         phone: values.buyerPhone,
       },
       items: products.map((p) => ({
-        id: p.id,
+        id: p.fsId,
         price: p.price,
+        title: p.title,
+        image: p.imageUrl,
         quantity: p.quantity,
       })),
       orderStatus: "created",
@@ -138,7 +140,7 @@ const Checkout = () => {
       .then((ref) => {
         console.log("Document written with ID: ", ref.id);
         clearCart();
-        history.push(ROUTES.home);
+        history.push(`/order/${ref.id}/success`);
       })
       .catch((e) => console.log(e));
   };

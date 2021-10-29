@@ -39,9 +39,7 @@ const FilteredProducts = ({ setLoading, loading }) => {
   }
 
   const fetchFilteredProducts = async () => {
-
     let filteredProds = [];
-
     const productsRef = collection(db, "products");
     const q = query(productsRef, where("categories", "array-contains", parseInt(currentCategory.id)));
     const querySnapshot = await getDocs(q);

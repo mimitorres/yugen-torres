@@ -149,7 +149,7 @@ const ProductDetail = ({ setLoading, loading }) => {
 
   const getSanitizedProduct = (productSnap) => {
     const data = productSnap.data();
-    return { ...data, description: data.description.replaceAll("\\n", "\n") };
+    return { ...data, fsId: productSnap.id, description: data.description.replaceAll("\\n", "\n") };
   };
 
   return !loading ? (

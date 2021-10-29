@@ -4,4 +4,5 @@ export const ROUTES = {
     category: "/category/:name",
     cart: "/cart",
     checkout: "/checkout",
+    success: "/order/:id/success",
 }
